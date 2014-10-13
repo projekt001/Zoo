@@ -1,2 +1,4 @@
 @WOJTEK
 Czesc, wlasnie udalo mi sie skomitowac katalogi, chcialbym sprawdzic, czy sa one u was widoczne
+
+Tu test komitu kodu z poziomu przeglądarki
