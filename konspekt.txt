@@ -1,0 +1,28 @@
+﻿PMO DOC
+Projekt Akademicki niekomercyjny
+Sobota, 11 października 2014
+Nazwa dokumentu: Project Mandate
+
+
+1)	Uzasadnienie uruchomienia projektu – Złożenie zamówienia prze klienta
+2)	Typ projektu – IT innowacyjny
+3)	Skala projektu – lokalny
+4)	Zlozonosc projektu - średnia: kod, bazowanie na gotowych rozwiazaniach, ale w nowym zastosowaniu, 
+5)	Proponowana obsada kluczowych ról 
+PKS decydent(Przedstawicie Komitetu Sterującego), wlasciciel uzasadnienia biznesowego – Pan Magister; 
+Architekt Systemu - Patryk Zglenicki
+programista - Marek Mielecki
+Programista - Patryk Zglenicki
+Integrator Systemu - Marek Mielecki
+PM – Wojciech Silko; 
+Quality Assurance - Wojciech Silko
+
+6)	Szacowany czas trwania projektu – 5 tygodni
+7)	Opis spodziewanych wyników – Stworzenie systemy wspomagajacego zarzadznie Zoo lub innej wyspecjalizowanej hodowli zwierzat, podnoszacy wydajnosc oraz kontrole nad hodowlą
+8)	Szacowany koszt projektu – 1 000 000 zł
+9)	Zagrozenia – finansowanie, zasoby, czas, wypuszczenie podobnego rozwiazania przez konkurencje, brak doswiadczenia czlonków zespolu, uciazliwosc zwiazana z iloscia danych do przetworzenia, koszty licencji, złożonosć procesu integracj komponentów
+
+
+fenton2020@gmail.com 
+mariusz.mielecki@nsn.com  - tu proszę podać mail prywatny 
+wojciechsilko@o2.pl
