@@ -8,6 +8,18 @@ Nazwa dokumentu: Project Mandate
 2)	Typ projektu – IT innowacyjny
 3)	Skala projektu – lokalny
 4)	Zlozonosc projektu - średnia: kod, bazowanie na gotowych rozwiazaniach, ale w nowym zastosowaniu, 
+
+* użyte technologie:
+Python 2.7.x
+PyQT 
+MySQL (bibliioteki dopisać)
+(uzupełnić wersje)
+
+MVC
+
+adres repo: https://github.com/projekt001/Zoo
+
+
 5)	Proponowana obsada kluczowych ról 
 PKS decydent(Przedstawicie Komitetu Sterującego), wlasciciel uzasadnienia biznesowego – Pan Magister; 
 Architekt Systemu - Patryk Zglenicki
