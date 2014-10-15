@@ -8,3 +8,5 @@ test polskich znaków - pliki UTF8
 ąęśćź
 
 Test Fenton121
+
+test pass!
