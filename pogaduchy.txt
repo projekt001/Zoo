@@ -6,3 +6,5 @@ Tu test komitu kodu z poziomu przeglądarki
 test polskich znaków - pliki UTF8
 
 ąęśćź
+
+Test Fenton121
