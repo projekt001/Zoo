@@ -11,9 +11,9 @@ Nazwa dokumentu: Project Mandate
 5)	Proponowana obsada kluczowych ról 
 PKS decydent(Przedstawicie Komitetu Sterującego), wlasciciel uzasadnienia biznesowego – Pan Magister; 
 Architekt Systemu - Patryk Zglenicki
-programista - Marek Mielecki
+programista - Mariusz Mielecki
 Programista - Patryk Zglenicki
-Integrator Systemu - Marek Mielecki
+Integrator Systemu - Mariusz Mielecki
 PM – Wojciech Silko; 
 Quality Assurance - Wojciech Silko
 
