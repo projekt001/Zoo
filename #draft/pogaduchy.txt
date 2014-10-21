@@ -1,16 +1,8 @@
-﻿@WOJTEK
-Czesc, wlasnie udalo mi sie skomitowac katalogi, chcialbym sprawdzic, czy sa one u was widoczne
+@wojtek
+pomysły
+1) Do Gui dodac mape z konturem zoo, dodac kolorki alarmy i komunikaty w azleżności od obsadzenia i stanu
+2) Mozna by na arduino, jesli zostanie trochę czsu zrobic pseudo terminal. który bdzie cos tam pokazywał
 
-Tu test komitu kodu z poziomu przeglądarki
+Taski do wykonania:
 
-test polskich znaków - pliki UTF8
-
-ąęśćź
-
-Test Fenton121
-
-test pass!
-
-Test mariusz5x
-
-Mam już zainstalowane srodowisko :)
+Spotykamy sie Jutro o 17
