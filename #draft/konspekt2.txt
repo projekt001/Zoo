@@ -46,12 +46,33 @@ Wklejamy obrazek encji
 scenariusze),
 
 Funkcjonalnośc:
-dodawanie/odejmowanie zagród
-dodawanie/odejmowanie zwierząt
-dodawanie/odejmowanie personelu
-dadawanie/odejmowanie weterynarzy
-dadawanie/odejmowanie pożywienia
-dodawanie/odejmowanie chorób
+
+Zwierzęta
+    -dodawanie/odejmowanie zwierząt
+    -przypisanie pożywienia (wielu)
+    -przyposanie zagrody, 
+    -przypisanie gatunku
+    -przypisanie zagrody
+    -przypisanie choroby (wielu)
+
+Weterynarze
+    -dodawanie/odemowanie
+    -przypisanie do zagrody (wielu)
+    -przypisanie specjalizacji
+Zagrody
+    -dodawnia/odejmowanie
+    -przypisanie typu zagrody
+     
+Pożywienie
+    -dodawanie/odejmowanie
+Choroby
+    -dodawanie/odejmowanie
+Gatunki
+    -dodawanie/odejmowanie
+Typy zagród
+    -dodawanie/odejmowanie
+ 
+
 
 
 Przypadki użucia:
@@ -59,7 +80,7 @@ sprawdzenie stanu zwiarząt
 sprawdzenie karty snanu zdrowia
 wyszukanie odpowiedniego pozywienia
 sprawdzenie stanu oraz obsadzenia zogród
-sprawdzenia personelu oraz personelu weterynaryjnego
+sprawdzenia personelu weterynaryjnego
 
 
 
