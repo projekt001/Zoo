@@ -1,19 +1,18 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
+import sys
 from PyQt4 import QtCore, QtGui
 from ZakladkaGlowna import Animals
 
 
-class GlowneOkno(QtGui.QTabWidget):
-
+class KontenerZakladek(QtGui.QTabWidget):
     def __init__(self):
-        super(GlowneOkno, self).__init__()
-	self.addTabs()
+        super(KontenerZakladek, self).__init__()
+        self.addTabs()
 
     def addTabs(self):
-
-	animalsTab1 = Animals()	
+        animalsTab1 = Animals()	
     	animalsTab2 = Animals()
     	animalsTab3 = Animals()
 
@@ -23,13 +22,14 @@ class GlowneOkno(QtGui.QTabWidget):
 
   
 
-if __name__ == "__main__":
-    import sys
+class GlowneOkno(QtGui.QApplication):
+    def __init__(self):
+        #QtGui.QApplication.__init__(sys.argv)
+        super(GlowneOkno, self).__init__(sys.argv)
+        self.setApplicationName('Aplikacja Zarządcy Zoo')
+        self.wyswietlZakladki();
 
-    app = QtGui.QApplication(sys.argv)
-    app.setApplicationName('MyWindow')
-
-    main = GlowneOkno()
-    main.show()
-
-    sys.exit(app.exec_())
+    def wyswietlZakladki(self):
+    	kontenerZakladek = KontenerZakladek()
+    	kontenerZakladek.show()
+    	sys.exit(self.exec_())

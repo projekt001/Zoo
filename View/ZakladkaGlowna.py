@@ -22,14 +22,14 @@ class Animals(QtGui.QWidget):
 
     	vBoxlayout	= QtGui.QVBoxLayout()
     	vBoxlayout.addWidget(pushButtonWindow1)
-	vBoxlayout.addWidget(pushButtonWindow2)
-	vBoxlayout.addWidget(Tablica(data, 5, 3, self))
+        vBoxlayout.addWidget(pushButtonWindow2)
+        vBoxlayout.addWidget(Tablica(data, 5, 3, self))
 
     	hBoxlayout	= QtGui.QHBoxLayout()
     	hBoxlayout.addWidget(pushButtonWindow3)
-	hBoxlayout.addWidget(pushButtonWindow4)
-	hBoxlayout.addWidget(Tablica(data, 5, 3, self))
+        hBoxlayout.addWidget(pushButtonWindow4)
+        hBoxlayout.addWidget(Tablica(data, 5, 3, self))
 
-	vBoxlayout.addLayout(hBoxlayout)
+        vBoxlayout.addLayout(hBoxlayout)
 
-	self.setLayout(vBoxlayout)
+        self.setLayout(vBoxlayout)
