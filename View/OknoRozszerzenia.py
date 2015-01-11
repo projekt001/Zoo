@@ -4,7 +4,8 @@ from PyQt4 import QtGui
 class OknoRozszerzenia(QtGui.QDialog):
     def __init__(self, parent=None):
         super(OknoRozszerzenia, self).__init__(parent)
-
+        
+        
         self.buttonBox = QtGui.QDialogButtonBox(self)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
