@@ -16,4 +16,7 @@ class GlowneOkno(QtGui.QApplication):
     	kontenerZakladek = KontenerZakladek()
     	kontenerZakladek.show()
     	sys.exit(self.exec_())
+<<<<<<< HEAD
 
+=======
+>>>>>>> d0a4587b2b08f95c89fe676c69eac34209f20ac2
