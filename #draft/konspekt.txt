@@ -1,0 +1,39 @@
+Projekt do wspierania zarządzania ZOO
+Sobota, 11 października 2014
+Nazwa dokumentu: Project Mandate
+
+
+1)    Uzasadnienie uruchomienia projektu – Złożenie zamówienia prze klienta, wynikające z kłopotów w zarządzaniu stale rozwijającym się obiektem ZOO. Liczba zwierząt w ZOO w ostatnich 5 latach wzrosła trzykrotnie. Przepisy w tym czasie w kontekście zapewnienia jakości życia zwierząt znacząco się wyostrzyły i wymagają monitorowania i rozbudowanej sprawozdawczości. Obowiązujący system jest niewydolny, generuje mnóstwo błędów i jest niekompatybilny z obowiązującym oprogramowaniem. Poza tym system nie jest przyjazny dla użytkowników i jest bardzo trudny w jakiejkolwiek modyfikacji. Wszystko to powoduje, że inwestowanie w obecny software jest nieopłacalne i nie przyniesie zadowalających rezultatów. Rekomendowane rozwiązanie, to kastomizowany system dla ZOO.
+2)    Typ projektu – IT innowacyjny
+3)    Skala projektu – lokalny
+4)    Złożoność projektu - średnia: kod, bazowanie na gotowych rozwiązaniach, ale w nowym zastosowaniu,
+
+* użyte technologie:
+a) Python 2.7.6 and modules:
+                          - python-qt4 ver. 4.8.6
+                          - python-mysqldb  1.2.5
+b) MySQL Ver 14.14 Distrib 5.5.38
+
+MVC
+
+adres repo: https://github.com/projekt001/Zoo
+
+
+5)    Proponowana obsada kluczowych ról
+PKS decydent (Przedstawicie Komitetu Sterującego), właściciel uzasadnienia biznesowego – Pan Magister;
+Architekt Systemu - Patryk Zglenicki
+Programista - Mariusz Mielecki
+Programista - Patryk Zglenicki
+Integrator Systemu - Mariusz Mielecki
+PM – Wojciech Siłko;
+Quality Assurance - Wojciech Siłko
+
+6)    Szacowany czas trwania projektu – 5 tygodni
+7)    Opis spodziewanych wyników – Stworzenie systemy wspomagającego zarządzenie zwierzętami w ZOO lub innej wyspecjalizowanej hodowli zwierząt, podnoszący wydajność oraz kontrolę nad hodowlą i jej utrzymaniem
+8)    Szacowany koszt projektu – 1 000 000 zł netto
+9)    Zagrożenia – płynność finansowania, zasoby ludzkie - mały zespół zależny od siebie, czas trwania projektu, który nie dopuszcza buforów czasowych, brak doświadczenia członków zespołu w analogicznym projekcie - nieznajomość branży, uciążliwość związana z ilością danych do przetworzenia, koszty licencji konieczne do poniesienia na etapie tworzenia projektu, złożoność procesu integracji komponentów
+
+
+fenton2020@gmail.com
+171750@student.pwr.wroc.pl
+wojciechsilko@o2.pl
