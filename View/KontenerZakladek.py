@@ -8,7 +8,7 @@ class KontenerZakladek(QtGui.QTabWidget):
         self.dodajZakladki()
 
     def dodajZakladki(self):
-        animalsTab1 = Animals()    
+        animalsTab1 =  Animals()    
         animalsTab2 = Animals()
         animalsTab3 = Animals()
 
