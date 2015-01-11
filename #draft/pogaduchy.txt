@@ -1,0 +1,11 @@
+@wojtek
+pomysły
+1) Do Gui dodac mape z konturem zoo, dodac kolorki alarmy i komunikaty w azleżności od obsadzenia i stanu
+2) Mozna by na arduino, jesli zostanie trochę czsu zrobic pseudo terminal. który bdzie cos tam pokazywał
+
+Taski do wykonania:
+
+Spotykamy sie Jutro o 17
+
+@wojtek 2014.11.17
+?
