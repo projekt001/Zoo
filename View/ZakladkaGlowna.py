@@ -5,7 +5,7 @@ from Tablica import Tablica
 data = {'col1':['1','2','3'], 'col2':['4','5','6'], 'col3':['7','8','9']}
 
 class Animals(QtGui.QWidget):
-    def __init__(self):
+    def __init__(self, uchwytDoBazy):
 	super(Animals, self).__init__()
 
         pushButtonWindow1 = QtGui.QPushButton()
@@ -23,12 +23,12 @@ class Animals(QtGui.QWidget):
     	vBoxlayout	= QtGui.QVBoxLayout()
     	vBoxlayout.addWidget(pushButtonWindow1)
         vBoxlayout.addWidget(pushButtonWindow2)
-        vBoxlayout.addWidget(Tablica(data, 5, 3, self))
+        vBoxlayout.addWidget(Tablica(uchwytDoBazy, self))
 
     	hBoxlayout	= QtGui.QHBoxLayout()
     	hBoxlayout.addWidget(pushButtonWindow3)
         hBoxlayout.addWidget(pushButtonWindow4)
-        hBoxlayout.addWidget(Tablica(data, 5, 3, self))
+        hBoxlayout.addWidget(Tablica(uchwytDoBazy, self))
 
         vBoxlayout.addLayout(hBoxlayout)
 

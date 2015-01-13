@@ -3,14 +3,14 @@ from PyQt4 import QtGui
 from ZakladkaGlowna import Animals
 
 class KontenerZakladek(QtGui.QTabWidget):
-    def __init__(self):
+    def __init__(self, uchwytDoBazy):
         super(KontenerZakladek, self).__init__()
-        self.dodajZakladki()
+        self.dodajZakladki(uchwytDoBazy)
 
-    def dodajZakladki(self):
-        animalsTab1 = Animals()    
-        animalsTab2 = Animals()
-        animalsTab3 = Animals()
+    def dodajZakladki(self, uchwytDoBazy):
+        animalsTab1 = Animals(uchwytDoBazy)    
+        animalsTab2 = Animals(uchwytDoBazy)
+        animalsTab3 = Animals(uchwytDoBazy)
 
         self.addTab(animalsTab1, "Tab 1")
         self.addTab(animalsTab2,"Tab 2")
