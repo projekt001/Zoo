@@ -7,7 +7,7 @@ class TabeleWBazie:
     def stworzTabeleGatunki(self):
         sqlStworzGatunki = """CREATE TABLE IF NOT EXISTS GATUNKI (
                               Id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                              Nazwa_Gatunek CHAR(20))""" 
+                              Nazwa_Gatunku CHAR(20))""" 
         try:
             self.cursor.execute(sqlStworzGatunki)   
         except Warning, e:
@@ -16,7 +16,7 @@ class TabeleWBazie:
     def stworzTabeleChoroby(self):
         sqlStworzChoroby = """CREATE TABLE IF NOT EXISTS CHOROBY (
                               Id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                              Nazwa_Choroba  CHAR(20))""" 
+                              Nazwa_Choroby  CHAR(20))""" 
         try:
             self.cursor.execute(sqlStworzChoroby)   
         except Warning, e:

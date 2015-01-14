@@ -33,7 +33,7 @@ class Tablica(QtGui.QTableWidget):
                 przesuniecie = 0;
                 for indexKolumny in range(iloscKolumn):
                     if not (indexKolumny in listaNieDoWyswietlenia):
-                        noweZwierze = QtGui.QTableWidgetItem(daneZwierzeta[indexWiersza][indexKolumny])
+                        noweZwierze = QtGui.QTableWidgetItem(str(daneZwierzeta[indexWiersza][indexKolumny]))
                         self.setItem(indexWiersza, indexKolumny - przesuniecie, noweZwierze)
                     else:
                         przesuniecie = przesuniecie + 1
@@ -52,8 +52,9 @@ class Tablica(QtGui.QTableWidget):
             przyciskDodania.clicked.connect(self.on_pushButton_clicked)
             self.setCellWidget(iloscWierszy, iloscKolumn - przesuniecie, przyciskDodania)
             
+            
     def pobierzDane(self, opisZwierzeta):
-        znaczniki    = ['Id']
+        znaczniki    = ['Id', ]
         
         listaDanychDoUsuniecia = []
         nazwyKolumn            = []
@@ -95,32 +96,6 @@ class Tablica(QtGui.QTableWidget):
     
     def on_pushButton_clicked(self):
         sender = self.sender()
-        print "sender.wartosc = " + str(sender.kluczGlowny)
-        #print 'jeden' + str(jeden)
         self.dialogTextBrowser = OknoRozszerzenia();
         self.dialogTextBrowser.exec_()
         
-    def dodajRekordy(self):
-        try:
-            self.cursor.execute("""INSERT INTO ZWIERZETA (`Nazwa_Zwierzecia`) VALUES('Hipopotam')""")
-            self.cursor.execute("""INSERT INTO ZWIERZETA (`Nazwa_Zwierzecia`) VALUES('Zyrafa')""")
-            self.cursor.execute("""INSERT INTO ZWIERZETA (`Nazwa_Zwierzecia`) VALUES('Tygrys')""")
-             
-            self.cursor.execute("""INSERT INTO POZYWIENIA (Nazwa_Pozywienia) VALUES('Buraki')""")
-            self.cursor.execute("""INSERT INTO POZYWIENIA (Nazwa_Pozywienia) VALUES('Marchew')""")
-            self.cursor.execute("""INSERT INTO POZYWIENIA (Nazwa_Pozywienia) VALUES('JABLKA')""")
-             
-            self.cursor.execute("""INSERT INTO LACZ_ZWIERZETA_POZYWIENIA(ZWIERZETA_Id, POZYWIENIA_Id) VALUES(1, 1)""")
-            self.cursor.execute("""INSERT INTO LACZ_ZWIERZETA_POZYWIENIA(ZWIERZETA_Id, POZYWIENIA_Id) VALUES(1, 2)""")
-            self.cursor.execute("""INSERT INTO LACZ_ZWIERZETA_POZYWIENIA(ZWIERZETA_Id, POZYWIENIA_Id) VALUES(1, 3)""")
-             
-            self.cursor.execute("""INSERT INTO LACZ_ZWIERZETA_POZYWIENIA(ZWIERZETA_Id, POZYWIENIA_Id) VALUES(2, 1)""")
-            self.cursor.execute("""INSERT INTO LACZ_ZWIERZETA_POZYWIENIA(ZWIERZETA_Id, POZYWIENIA_Id) VALUES(2, 2)""")
-            self.cursor.execute("""INSERT INTO LACZ_ZWIERZETA_POZYWIENIA(ZWIERZETA_Id, POZYWIENIA_Id) VALUES(2, 3)""")
-            
-            self.cursor.execute("""DELETE FROM ZWIERZETA WHERE Id=1""")
-
-        except Warning, e:
-            print str(e)
-            
-        self.mysql.commit();
