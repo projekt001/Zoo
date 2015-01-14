@@ -15,48 +15,42 @@ class Tablica(QtGui.QTableWidget):
         self.resizeRowsToContents()
  
     def generacjaTabeli(self):
-        
         opisZwierzeta = self.pobierzOpisTabeli()
         listaNieDoWyswietlenia, nazwyKolumn = self.pobierzDane(opisZwierzeta)
         daneZwierzeta = self.pobierzDaneZwierzat()
-        print daneZwierzeta
+        
         iloscWierszy  = len(daneZwierzeta)
-        iloscKolumn   = len(daneZwierzeta[0])
-        
-        self.setRowCount(iloscWierszy + 1)
-        self.setColumnCount(iloscKolumn + 1 - len(listaNieDoWyswietlenia))
         
         
-        for indexWiersza in range(iloscWierszy):
-            przesuniecie = 0;
-            for indexKolumny in range(iloscKolumn):
-                if not (indexKolumny in listaNieDoWyswietlenia):
-                    noweZwierze = QtGui.QTableWidgetItem(daneZwierzeta[indexWiersza][indexKolumny])
-                    self.setItem(indexWiersza, indexKolumny - przesuniecie, noweZwierze)
-                else:
-                    przesuniecie = przesuniecie + 1
+        if(iloscWierszy > 0):
+            iloscKolumn   = len(daneZwierzeta[0])
             
-            if(indexWiersza == 0):
-                przyciskDoEdycji1 = QtGui.QPushButton(self)
-                przyciskDoEdycji1.setText('edytuj')
-                przyciskDoEdycji1.wartosc = daneZwierzeta[indexWiersza][0]
-                print 'dodano = '+ str(daneZwierzeta[indexWiersza][0])
-                dupa = str(daneZwierzeta[0][0])
-                przyciskDoEdycji1.clicked.connect(lambda: self.on_pushButton_clicked(przyciskDoEdycji1.wartosc))
-                self.setCellWidget(0, 1, przyciskDoEdycji1)
+            self.setRowCount(iloscWierszy + 1)
+            self.setColumnCount(iloscKolumn + 1 - len(listaNieDoWyswietlenia))
+        
+            self.listaKluczy = [];
+            for indexWiersza in range(iloscWierszy):
+                przesuniecie = 0;
+                for indexKolumny in range(iloscKolumn):
+                    if not (indexKolumny in listaNieDoWyswietlenia):
+                        noweZwierze = QtGui.QTableWidgetItem(daneZwierzeta[indexWiersza][indexKolumny])
+                        self.setItem(indexWiersza, indexKolumny - przesuniecie, noweZwierze)
+                    else:
+                        przesuniecie = przesuniecie + 1
+                    
+            
+                przyciskDoEdycji = QtGui.QPushButton(self)
+                przyciskDoEdycji.setText('edytuj')
+                przyciskDoEdycji.kluczGlowny = daneZwierzeta[indexWiersza][0];
+                przyciskDoEdycji.clicked.connect(self.on_pushButton_clicked)
+                self.setCellWidget(indexWiersza, iloscKolumn - 1, przyciskDoEdycji)
+            
                 
-            if(indexWiersza == 1):
-                przyciskDoEdycji2 = QtGui.QPushButton(self)
-                przyciskDoEdycji2.setText('edytuj')
-                print 'dodano = '+ str(daneZwierzeta[indexWiersza][0])
-                dupa = str(daneZwierzeta[1][0])
-                przyciskDoEdycji2.clicked.connect(lambda: self.on_pushButton_clicked(dupa))
-                self.setCellWidget(1, 1, przyciskDoEdycji2)
-            
-        przyciskDoEdycji = QtGui.QPushButton(self)
-        przyciskDoEdycji.setText('dodaj')
-        przyciskDoEdycji.clicked.connect(lambda: self.on_pushButton_clicked(str(daneZwierzeta[0][0])))
-        self.setCellWidget(iloscWierszy, iloscKolumn - przesuniecie, przyciskDoEdycji)
+            przyciskDodania = QtGui.QPushButton(self)
+            przyciskDodania.setText('dodaj')
+            przyciskDodania.kluczGlowny = -1;
+            przyciskDodania.clicked.connect(self.on_pushButton_clicked)
+            self.setCellWidget(iloscWierszy, iloscKolumn - przesuniecie, przyciskDodania)
             
     def pobierzDane(self, opisZwierzeta):
         znaczniki    = ['Id']
@@ -99,8 +93,10 @@ class Tablica(QtGui.QTableWidget):
     def konwertujDoListy(self, dane):
         return list(map(self.konwertujDoListy, dane)) if isinstance(dane, (list, tuple)) else dane
     
-    def on_pushButton_clicked(self, jeden):
-        print 'jeden' + str(jeden)
+    def on_pushButton_clicked(self):
+        sender = self.sender()
+        print "sender.wartosc = " + str(sender.kluczGlowny)
+        #print 'jeden' + str(jeden)
         self.dialogTextBrowser = OknoRozszerzenia();
         self.dialogTextBrowser.exec_()
         
