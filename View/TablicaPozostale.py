@@ -5,50 +5,58 @@ from Tablica import Tablica
 
 
 class TablicaPozostale(Tablica):
-    def __init__(self, uchwytDoBazy, kontroler, parent):
+    def __init__(self, uchwytDoBazy, kontroler, nazwaTabeli, parent):
         super(TablicaPozostale, self).__init__(uchwytDoBazy, kontroler, parent)
-        self.generacjaTabeli()
+        
+        self.generacjaTabeli(nazwaTabeli)
+
         self.resizeColumnsToContents()
         self.resizeRowsToContents()
         
-    def generacjaTabeli(self):
-        opisZwierzeta = self.pobierzOpisTabeli("ZWIERZETA")
+    def generacjaTabeli(self, nazwaTabeli):
+        opisZwierzeta = self.kontroler.pobierzOpisTabeli(nazwaTabeli)
         elementyDoWykluczenia = ["Id"]
-        listaNieDoWyswietlenia, nazwyKolumn = self.pobierzWlasciweDane(opisZwierzeta,
-                                                                       elementyDoWykluczenia)
-        daneZwierzeta = self.pobierzDane("ZWIERZETA")
+        listaNieDoWyswietlenia, nazwyKolumn = self.kontroler.pobierzWlasciweDane(opisZwierzeta,
+                                                                                 elementyDoWykluczenia)
+        daneZwierzeta = self.kontroler.pobierzDane(nazwaTabeli)
         
-        iloscWierszy  = len(daneZwierzeta)
+        self.iloscWierszy  = len(daneZwierzeta)
         
-        
-        
-        if(iloscWierszy > 0):
-            iloscKolumn   = len(daneZwierzeta[0])
+        if(self.iloscWierszy > 0):
+            self.iloscKolumn   = len(daneZwierzeta[0])
             
-            self.setRowCount(iloscWierszy + 1)
-            self.setColumnCount(iloscKolumn + 1 - len(listaNieDoWyswietlenia))
+            self.setRowCount(self.iloscWierszy + 1)
+            self.setColumnCount(self.iloscKolumn + 1 - len(listaNieDoWyswietlenia))
         
             self.setHorizontalHeaderLabels(nazwyKolumn)
             self.listaKluczy = [];
-            for indexWiersza in range(iloscWierszy):
-                przesuniecie = 0;
-                for indexKolumny in range(iloscKolumn):
+            for indexWiersza in range(self.iloscWierszy):
+                self.przesuniecie = 0;
+                for indexKolumny in range(self.iloscKolumn):
                     if not (indexKolumny in listaNieDoWyswietlenia):
                         noweZwierze = QtGui.QTableWidgetItem(str(daneZwierzeta[indexWiersza][indexKolumny]))
-                        self.setItem(indexWiersza, indexKolumny - przesuniecie, noweZwierze)
+                        self.setItem(indexWiersza, indexKolumny - self.przesuniecie, noweZwierze)
                     else:
-                        przesuniecie = przesuniecie + 1
+                        self.przesuniecie = self.przesuniecie + 1
                     
             
                 przyciskDoEdycji = QtGui.QPushButton(self)
                 przyciskDoEdycji.setText('edytuj')
                 przyciskDoEdycji.kluczGlowny = daneZwierzeta[indexWiersza][0];
                 przyciskDoEdycji.clicked.connect(self.on_pushButton_clicked)
-                self.setCellWidget(indexWiersza, iloscKolumn - 1, przyciskDoEdycji)
-            
+                self.setCellWidget(indexWiersza, self.iloscKolumn - 1, przyciskDoEdycji)
                 
-            przyciskDodania = QtGui.QPushButton(self)
-            przyciskDodania.setText('dodaj')
-            przyciskDodania.kluczGlowny = -1;
-            przyciskDodania.clicked.connect(self.on_pushButton_clicked)
-            self.setCellWidget(iloscWierszy, iloscKolumn - przesuniecie, przyciskDodania)
+    def przyciskPozywienia(self):
+        przyciskDodania = QtGui.QPushButton(self)
+        przyciskDodania.setText('dodaj')
+        przyciskDodania.clicked.connect(self.dodajPozywienia)
+        self.setCellWidget(self.iloscWierszy, self.iloscKolumn - self.przesuniecie, przyciskDodania)
+            
+    def dodajPozywienia(self):
+        widget = self.item(self.iloscWierszy, self.iloscKolumn - self.przesuniecie - 1)
+        print widget.text()
+        
+    def on_pushButton_clicked(self):
+        sender = self.sender()
+        self.dialogTextBrowser = OknoRozszerzenia();
+        self.dialogTextBrowser.exec_()

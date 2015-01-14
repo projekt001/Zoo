@@ -4,6 +4,37 @@ class Kontroler:
         self.uchwytDoBazy      = uchwytDoBazy;
         self.kursorDoBazy      = self.uchwytDoBazy.cursor()
         
+    def pobierzOpisTabeli(self, nazwaTabeli):
+        komenda = "DESCRIBE " + nazwaTabeli
+        self.kursorDoBazy.execute(komenda)
+        opisZwierzeta = self.kursorDoBazy.fetchall()
+        return opisZwierzeta
+    
+    def pobierzWlasciweDane(self, opisZwierzeta, elementyDoUsuniecia):
+        
+        listaDanychDoUsuniecia = []
+        nazwyKolumn            = []
+        
+        liczbaKolumn = len(opisZwierzeta)
+        for indexKolumny in range(liczbaKolumn):
+            if ( self.znajdzElementWLiscie(elementyDoUsuniecia, opisZwierzeta[indexKolumny][0])):
+                listaDanychDoUsuniecia.append(indexKolumny)
+            else:
+                nazwyKolumn.append(str(opisZwierzeta[indexKolumny][0]))
+        return listaDanychDoUsuniecia, nazwyKolumn
+    
+    
+    def pobierzDane(self, nazwaTabeli):
+        komenda = "SELECT * FROM " +  nazwaTabeli
+        self.kursorDoBazy.execute(komenda)
+        daneZwierzeta = self.kursorDoBazy.fetchall()
+                
+        return daneZwierzeta
+    
+    
+    def znajdzElementWLiscie(self, znaczniki, element):
+        return [item for item in range(len(znaczniki)) if znaczniki[item] == element]
+
     def dodajRekordy(self):
         try:
             self.kursorDoBazy.execute("""INSERT INTO POZYWIENIA (Nazwa_Pozywienia) VALUES('Buraki')""")

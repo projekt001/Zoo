@@ -12,11 +12,11 @@ class TablicaZwierzeta(Tablica):
         self.resizeRowsToContents()
         
     def generacjaTabeli(self):
-        opisZwierzeta = self.pobierzOpisTabeli("ZWIERZETA")
+        opisZwierzeta = self.kontroler.pobierzOpisTabeli("ZWIERZETA")
         elementyDoWykluczenia = ["Id"]
-        listaNieDoWyswietlenia, nazwyKolumn = self.pobierzWlasciweDane(opisZwierzeta,
-                                                                       elementyDoWykluczenia)
-        daneZwierzeta = self.pobierzDane("ZWIERZETA")
+        listaNieDoWyswietlenia, nazwyKolumn = self.kontroler.pobierzWlasciweDane(opisZwierzeta,
+                                                                                 elementyDoWykluczenia)
+        daneZwierzeta = self.kontroler.pobierzDane("ZWIERZETA")
         
         iloscWierszy  = len(daneZwierzeta)
         
@@ -52,3 +52,8 @@ class TablicaZwierzeta(Tablica):
             przyciskDodania.kluczGlowny = -1;
             przyciskDodania.clicked.connect(self.on_pushButton_clicked)
             self.setCellWidget(iloscWierszy, iloscKolumn - przesuniecie, przyciskDodania)
+            
+    def on_pushButton_clicked(self):
+        sender = self.sender()
+        self.dialogTextBrowser = OknoRozszerzenia();
+        self.dialogTextBrowser.exec_()
