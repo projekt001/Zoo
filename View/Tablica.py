@@ -9,15 +9,16 @@ class Tablica(QtGui.QTableWidget):
         self.kontroler         = kontroler
         
         
-        
-    def pobierzInformacjeOTabeli(self, nazwaTabeli, elementyDoWykluczenia):
+    def pobierzInformacjeOTabeli(self, nazwaTabeli):
         self.nazwaTabeli = nazwaTabeli
         self.opisZwierzeta = self.kontroler.pobierzOpisTabeli(self.nazwaTabeli)
+        
+    def pobierzDaneDoWyswietlenia(self, elementyDoWykluczenia):
         self.elementyDoWykluczenia = elementyDoWykluczenia;
         self.listaNieDoWyswietlenia, self.nazwyKolumn = self.kontroler.pobierzWlasciweDane(self.opisZwierzeta,
                                                                                            self.elementyDoWykluczenia)
-        self.daneZwierzeta = self.kontroler.pobierzDane(self.nazwaTabeli)
         
+    def pobierzWymiary(self):
         self.iloscWierszy  = len(self.daneZwierzeta)
         if(self.iloscWierszy > 0):
             self.iloscKolumn   = len(self.daneZwierzeta[0])
@@ -32,7 +33,6 @@ class Tablica(QtGui.QTableWidget):
                           self.iloscKolumn + 1 - len(self.listaNieDoWyswietlenia))
     
         self.setHorizontalHeaderLabels(self.nazwyKolumn)
-        
         for indexWiersza in range(self.iloscWierszy):
             self.przesuniecie = 0;
             for indexKolumny in range(self.iloscKolumn):
@@ -45,13 +45,14 @@ class Tablica(QtGui.QTableWidget):
             self.przyciskEdycji(indexWiersza)
 
         self.przyciskDodaniaWiersza();
-        
+           
+            
     def przyciskEdycji(self, indexWiersza):
         przyciskDoEdycji = QtGui.QPushButton(self)
         przyciskDoEdycji.setText('edytuj')
         przyciskDoEdycji.kluczGlowny = self.daneZwierzeta[indexWiersza][0];
         przyciskDoEdycji.clicked.connect(self.edytujKolumne)
-        self.setCellWidget(indexWiersza, self.iloscKolumn - 1, przyciskDoEdycji)
+        self.setCellWidget(indexWiersza, self.iloscKolumn - self.przesuniecie, przyciskDoEdycji)
                            
     def przyciskDodaniaWiersza(self):
         przyciskDodania = QtGui.QPushButton(self)
@@ -62,11 +63,12 @@ class Tablica(QtGui.QTableWidget):
     def dodajWiersz(self):
         widget = self.item(self.iloscWierszy, 
                            self.iloscKolumn - self.przesuniecie - 1)
-        
+
         self.kontroler.zapiszWBazie(self.nazwaTabeli, 
                                     self.opisZwierzeta, 
                                     [widget.text()]);
-                                    
+        self.pobierzDane()
+        self.pobierzWymiary()
         self.generacjaTabeli();
         
     def edytujKolumne(self):

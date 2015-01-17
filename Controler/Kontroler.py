@@ -76,6 +76,7 @@ class Kontroler:
             
             self.kursorDoBazy.execute("""INSERT INTO ZAGRODY (Powierzchnia, TYPY_ZAGROD_Id)   
                                                              VALUES(15, 1)""")
+            
             self.kursorDoBazy.execute("""INSERT INTO ZAGRODY (Powierzchnia, TYPY_ZAGROD_Id)   
                                                              VALUES(40, 2)""")
             self.kursorDoBazy.execute("""INSERT INTO ZAGRODY (Powierzchnia, TYPY_ZAGROD_Id)   
@@ -95,13 +96,17 @@ class Kontroler:
         except Warning, e:
             print str(e)
             
-    def laczTabele(self, tabelaGlowna, ):
+    def laczTabele(self, tabelaGlowna, tabelaDoDolaczenia, nazwaKluczaGlowna, nazwaKluczaDolaczenia, nazwaKolumnyDolaczenia):
 
-        komenda  = "SELECT ZAGRODY.*, TYPY_ZAGROD.Nazwa_Typ_Zagrody FROM ZAGRODY " + \
-                   "LEFT JOIN TYPY_ZAGROD " + \
-                   "ON ZAGRODY.TYPY_ZAGROD_Id = TYPY_ZAGROD.Id"
+        komenda  = "SELECT " +  tabelaGlowna + ".*, " + tabelaDoDolaczenia + "." + nazwaKolumnyDolaczenia + " FROM " + tabelaGlowna + \
+                   " LEFT JOIN " + tabelaDoDolaczenia + \
+                   " ON " + tabelaGlowna + "." + nazwaKluczaGlowna + " = " + tabelaDoDolaczenia + "." + nazwaKluczaDolaczenia
         self.kursorDoBazy.execute(komenda)
         
+        
         return self.kursorDoBazy.fetchall()
+    
+    #def znajdzIndexKolumny(self, opisTabeli, nazwaKolumny):
+        
         
         
