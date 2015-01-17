@@ -5,58 +5,44 @@ from Tablica import Tablica
 
 
 class TablicaPozostale(Tablica):
-    def __init__(self, uchwytDoBazy, kontroler, nazwaTabeli, parent):
-        super(TablicaPozostale, self).__init__(uchwytDoBazy, kontroler, parent)
+    def __init__(self, kontroler, nazwaTabeli, parent):
+        super(TablicaPozostale, self).__init__(kontroler, parent)
         
-        self.generacjaTabeli(nazwaTabeli)
+        if self.pobierzInformacjeOTabeli(nazwaTabeli, ["Id"]):
+            self.generacjaTabeli()
 
         self.resizeColumnsToContents()
         self.resizeRowsToContents()
-        
-    def generacjaTabeli(self, nazwaTabeli):
-        opisZwierzeta = self.kontroler.pobierzOpisTabeli(nazwaTabeli)
-        elementyDoWykluczenia = ["Id"]
-        listaNieDoWyswietlenia, nazwyKolumn = self.kontroler.pobierzWlasciweDane(opisZwierzeta,
-                                                                                 elementyDoWykluczenia)
-        daneZwierzeta = self.kontroler.pobierzDane(nazwaTabeli)
-        
-        self.iloscWierszy  = len(daneZwierzeta)
-        
-        if(self.iloscWierszy > 0):
-            self.iloscKolumn   = len(daneZwierzeta[0])
             
-            self.setRowCount(self.iloscWierszy + 1)
-            self.setColumnCount(self.iloscKolumn + 1 - len(listaNieDoWyswietlenia))
+class TablicaPozostaleZagrody(Tablica):
+    def __init__(self, kontroler, nazwaTabeli, parent):
+        super(TablicaPozostaleZagrody, self).__init__(kontroler, parent)
+         
+        if self.pobierzInformacjeOTabeli(nazwaTabeli, ["Id"]):
+            self.przystosujOpisZagrody();
+            self.generacjaTabeli()
+    
+
+        self.resizeColumnsToContents()
+        self.resizeRowsToContents()
+    
+    def przystosujOpisZagrody(self):
         
-            self.setHorizontalHeaderLabels(nazwyKolumn)
-            self.listaKluczy = [];
-            for indexWiersza in range(self.iloscWierszy):
-                self.przesuniecie = 0;
-                for indexKolumny in range(self.iloscKolumn):
-                    if not (indexKolumny in listaNieDoWyswietlenia):
-                        noweZwierze = QtGui.QTableWidgetItem(str(daneZwierzeta[indexWiersza][indexKolumny]))
-                        self.setItem(indexWiersza, indexKolumny - self.przesuniecie, noweZwierze)
-                    else:
-                        self.przesuniecie = self.przesuniecie + 1
-                    
-            
-                przyciskDoEdycji = QtGui.QPushButton(self)
-                przyciskDoEdycji.setText('edytuj')
-                przyciskDoEdycji.kluczGlowny = daneZwierzeta[indexWiersza][0];
-                przyciskDoEdycji.clicked.connect(self.on_pushButton_clicked)
-                self.setCellWidget(indexWiersza, self.iloscKolumn - 1, przyciskDoEdycji)
-                
-    def przyciskPozywienia(self):
-        przyciskDodania = QtGui.QPushButton(self)
-        przyciskDodania.setText('dodaj')
-        przyciskDodania.clicked.connect(self.dodajPozywienia)
-        self.setCellWidget(self.iloscWierszy, self.iloscKolumn - self.przesuniecie, przyciskDodania)
-            
-    def dodajPozywienia(self):
-        widget = self.item(self.iloscWierszy, self.iloscKolumn - self.przesuniecie - 1)
-        print widget.text()
+        self.daneZwierzeta = self.kontroler.laczTabele("ZAGRODY");
         
-    def on_pushButton_clicked(self):
-        sender = self.sender()
-        self.dialogTextBrowser = OknoRozszerzenia();
-        self.dialogTextBrowser.exec_()
+        komenda  = "SELECT ZAGRODY.*, TYPY_ZAGROD.Nazwa_Typ_Zagrody FROM ZAGRODY " + \
+                   "LEFT JOIN TYPY_ZAGROD " + \
+                   "ON ZAGRODY.TYPY_ZAGROD_Id = TYPY_ZAGROD.Id"
+                   
+        szukanyNaglowek = "TYPY_ZAGROD_Id"
+        
+
+        
+        for indexWiersza in range(len(self.opisZwierzeta)):
+            print self.opisZwierzeta[indexWiersza][0];
+            if(self.opisZwierzeta[indexWiersza][0] == szukanyNaglowek):
+                indexSzukanegoNaglowka = indexWiersza
+                print "self.indexSzukanegoNaglowka = " + str(indexSzukanegoNaglowka)
+            
+        #self.daneZwierzeta
+    

@@ -4,6 +4,26 @@ class Kontroler:
         self.uchwytDoBazy      = uchwytDoBazy;
         self.kursorDoBazy      = self.uchwytDoBazy.cursor()
         
+    def zapiszWBazie(self, nazwaTabeli, opisTabeli, daneDoWstawienia):
+        
+        print opisTabeli
+        self.iloscKolumn  = len(opisTabeli)
+        komenda = "INSERT INTO " + nazwaTabeli + " ("
+        
+        for indexKolumny in range(1, self.iloscKolumn):
+            komenda = komenda + str(opisTabeli[indexKolumny][0])
+        komenda = komenda + ") VALUES("
+        
+    
+        for indexDanych in range(len(daneDoWstawienia)):
+            komenda = komenda + "'" + str(daneDoWstawienia[indexDanych]) + "'"
+        komenda = komenda + ")"
+        
+        try:
+            self.kursorDoBazy.execute(komenda)
+        except Warning, e:
+            print str(e)
+        
     def pobierzOpisTabeli(self, nazwaTabeli):
         komenda = "DESCRIBE " + nazwaTabeli
         self.kursorDoBazy.execute(komenda)
@@ -37,6 +57,7 @@ class Kontroler:
 
     def dodajRekordy(self):
         try:
+
             self.kursorDoBazy.execute("""INSERT INTO POZYWIENIA (Nazwa_Pozywienia) VALUES('Buraki')""")
             self.kursorDoBazy.execute("""INSERT INTO POZYWIENIA (Nazwa_Pozywienia) VALUES('Marchew')""")
             self.kursorDoBazy.execute("""INSERT INTO POZYWIENIA (Nazwa_Pozywienia) VALUES('JABLKA')""")
@@ -59,6 +80,9 @@ class Kontroler:
                                                              VALUES(40, 2)""")
             self.kursorDoBazy.execute("""INSERT INTO ZAGRODY (Powierzchnia, TYPY_ZAGROD_Id)   
                                                              VALUES(90, 3)""")
+            
+            self.kursorDoBazy.execute("""INSERT INTO ZAGRODY (Powierzchnia, TYPY_ZAGROD_Id)   
+                                                             VALUES(90, 1)""")
                            
             self.kursorDoBazy.execute("""INSERT INTO ZWIERZETA (Nazwa_Zwierzecia, Wzrost, Waga, Wiek, GATUNEK_Id, ZAGRODA_Id) 
                                                                VALUES('Hipopotam', 120, 10, 20, 1, 1)""")
@@ -70,3 +94,14 @@ class Kontroler:
 
         except Warning, e:
             print str(e)
+            
+    def laczTabele(self, tabelaGlowna, ):
+
+        komenda  = "SELECT ZAGRODY.*, TYPY_ZAGROD.Nazwa_Typ_Zagrody FROM ZAGRODY " + \
+                   "LEFT JOIN TYPY_ZAGROD " + \
+                   "ON ZAGRODY.TYPY_ZAGROD_Id = TYPY_ZAGROD.Id"
+        self.kursorDoBazy.execute(komenda)
+        
+        return self.kursorDoBazy.fetchall()
+        
+        

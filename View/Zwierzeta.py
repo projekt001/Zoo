@@ -4,7 +4,7 @@ from TablicaZwierzeta import TablicaZwierzeta
 
 
 class Zwierzeta(QtGui.QWidget):
-    def __init__(self, uchwytDoBazy, kontroler):
+    def __init__(self, kontroler):
         super(Zwierzeta, self).__init__()
 
         pushButtonWindow1 = QtGui.QPushButton()
@@ -22,7 +22,7 @@ class Zwierzeta(QtGui.QWidget):
         vBoxlayout    = QtGui.QVBoxLayout()
         vBoxlayout.addWidget(pushButtonWindow1)
         vBoxlayout.addWidget(pushButtonWindow2)
-        vBoxlayout.addWidget(TablicaZwierzeta(uchwytDoBazy, kontroler, self))
+        vBoxlayout.addWidget(TablicaZwierzeta(kontroler, self))
 
         hBoxlayout    = QtGui.QHBoxLayout()
         hBoxlayout.addWidget(pushButtonWindow3)

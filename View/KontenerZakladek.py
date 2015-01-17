@@ -5,17 +5,14 @@ from Weterynarze import Weterynarze
 from Pozostale import Pozostale
 
 class KontenerZakladek(QtGui.QTabWidget):
-    def __init__(self, uchwytDoBazy, kontroler):
+    def __init__(self, kontroler):
         super(KontenerZakladek, self).__init__()
-        self.dodajZakladki(uchwytDoBazy,
-                           kontroler)
+        self.dodajZakladki(kontroler)
 
-    def dodajZakladki(self, uchwytDoBazy, kontroler):
-        zakladkaZwierzat    = Zwierzeta(uchwytDoBazy,
-                                        kontroler)    
-        zakladkaWeterynarze = Weterynarze(uchwytDoBazy)
-        zakladkaPozostale   = Pozostale(uchwytDoBazy,
-                                        kontroler)
+    def dodajZakladki(self, kontroler):
+        zakladkaZwierzat    = Zwierzeta(kontroler)    
+        zakladkaWeterynarze = Weterynarze(kontroler)
+        zakladkaPozostale   = Pozostale(kontroler)
 
         self.addTab(zakladkaZwierzat,   "Zwierzeta")
         self.addTab(zakladkaWeterynarze,"Weterynarze")

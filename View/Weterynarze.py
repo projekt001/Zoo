@@ -4,7 +4,7 @@ from Tablica import Tablica
 
 
 class Weterynarze(QtGui.QWidget):
-    def __init__(self, uchwytDoBazy):
+    def __init__(self, kontroler):
         super(Weterynarze, self).__init__()
 
         pushButtonWindow1 = QtGui.QPushButton()

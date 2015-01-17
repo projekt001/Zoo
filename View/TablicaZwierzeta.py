@@ -5,8 +5,8 @@ from Tablica import Tablica
 
 
 class TablicaZwierzeta(Tablica):
-    def __init__(self, uchwytDoBazy, kontroler, parent):
-        super(TablicaZwierzeta, self).__init__(uchwytDoBazy, kontroler, parent)
+    def __init__(self, kontroler, parent):
+        super(TablicaZwierzeta, self).__init__(kontroler, parent)
         self.generacjaTabeli()
         self.resizeColumnsToContents()
         self.resizeRowsToContents()

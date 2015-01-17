@@ -14,8 +14,7 @@ if __name__ == "__main__":
     
     kontroler  = Kontroler(uchwytDoBazy)
     kontroler.dodajRekordy()
-    glowneOkno = GlowneOkno(uchwytDoBazy, 
-                            kontroler)
+    glowneOkno = GlowneOkno(kontroler)
 
     polaczZBaza.zamknijBaze()
     
