@@ -24,6 +24,24 @@ class Kontroler:
         except Warning, e:
             print str(e)
         
+    def modyfikujWartoscWTabeli(self,
+                                nazwaTabeli, 
+                                nazwaKolumn,
+                                kluczGlowny, 
+                                poleDoZapisania):
+        print "poleDoZapisania = " + str(poleDoZapisania)
+        komenda = "UPDATE " + str(nazwaTabeli) + " SET " 
+        
+        iloscKolumn = len(nazwaKolumn)
+        for indexKolumny in range(iloscKolumn):
+            komenda = komenda + str(nazwaKolumn[indexKolumny]) + " = " + str(poleDoZapisania[indexKolumny].text()) + " "
+        
+        komenda = komenda + " WHERE Id = "+ str(kluczGlowny)
+        
+        print komenda
+
+        self.kursorDoBazy.execute(komenda)
+
     def pobierzOpisTabeli(self, nazwaTabeli):
         komenda = "DESCRIBE " + nazwaTabeli
         self.kursorDoBazy.execute(komenda)
@@ -51,6 +69,13 @@ class Kontroler:
                 
         return daneZwierzeta
     
+    def pobierzJedenWiersz(self, nazwaTabeli, kluczGlowny):
+        print 'Jeden Wiersz !'
+        komenda = "SELECT * FROM " +  nazwaTabeli + " WHERE Id =" + str(kluczGlowny)
+        self.kursorDoBazy.execute(komenda)
+        dane = self.kursorDoBazy.fetchone()
+                
+        return dane
     
     def znajdzElementWLiscie(self, znaczniki, element):
         return [item for item in range(len(znaczniki)) if znaczniki[item] == element]

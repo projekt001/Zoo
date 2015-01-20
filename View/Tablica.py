@@ -38,21 +38,15 @@ class Tablica(QtGui.QTableWidget):
             for indexKolumny in range(self.iloscKolumn):
                 if not (indexKolumny in self.listaNieDoWyswietlenia):
                     noweZwierze = QtGui.QTableWidgetItem(str(self.daneZwierzeta[indexWiersza][indexKolumny]))
+                    noweZwierze.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
                     self.setItem(indexWiersza, indexKolumny - self.przesuniecie, noweZwierze)
                 else:
                     self.przesuniecie = self.przesuniecie + 1
-                
+            print "indexWiersza" + str(indexWiersza)
             self.przyciskEdycji(indexWiersza)
 
         self.przyciskDodaniaWiersza();
            
-            
-    def przyciskEdycji(self, indexWiersza):
-        przyciskDoEdycji = QtGui.QPushButton(self)
-        przyciskDoEdycji.setText('edytuj')
-        przyciskDoEdycji.kluczGlowny = self.daneZwierzeta[indexWiersza][0];
-        przyciskDoEdycji.clicked.connect(self.edytujKolumne)
-        self.setCellWidget(indexWiersza, self.iloscKolumn - self.przesuniecie, przyciskDoEdycji)
                            
     def przyciskDodaniaWiersza(self):
         przyciskDodania = QtGui.QPushButton(self)
@@ -67,14 +61,13 @@ class Tablica(QtGui.QTableWidget):
         self.kontroler.zapiszWBazie(self.nazwaTabeli, 
                                     self.opisZwierzeta, 
                                     [widget.text()]);
+        self.odswierz()
+        
+    def odswierz(self):
         self.pobierzDane()
         self.pobierzWymiary()
         self.generacjaTabeli();
         
-    def edytujKolumne(self):
-        sender = self.sender()
-        self.dialogTextBrowser = OknoRozszerzenia();
-        self.dialogTextBrowser.exec_()
         
     def ustawRozmiar(self, iloscWierszy, iloscKolumn):
         self.setRowCount(iloscWierszy)
