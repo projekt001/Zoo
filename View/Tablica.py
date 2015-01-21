@@ -26,10 +26,6 @@ class Tablica(QtGui.QTableWidget):
         else:
             return 0
         
-    def odswierz(self):
-        self.pobierzDane()
-        self.pobierzWymiary()
-        self.generacjaTabeli();
         
         
     def ustawRozmiar(self, iloscWierszy, iloscKolumn):

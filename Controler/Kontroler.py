@@ -11,13 +11,15 @@ class Kontroler:
         komenda = "INSERT INTO " + nazwaTabeli + " ("
         
         for indexKolumny in range(1, self.iloscKolumn):
-            komenda = komenda + str(opisTabeli[indexKolumny][0])
-        komenda = komenda + ") VALUES("
+            komenda = komenda + str(opisTabeli[indexKolumny][0]) + ", "
+        komenda = komenda[0:-2] + ") VALUES("
         
     
         for indexDanych in range(len(daneDoWstawienia)):
-            komenda = komenda + "'" + str(daneDoWstawienia[indexDanych]) + "'"
-        komenda = komenda + ")"
+            komenda = komenda + "'" + str(daneDoWstawienia[indexDanych]) + "', "
+        komenda = komenda[0:-2] + ")"
+        
+        print "zapiszWBazie" + komenda
         
         try:
             self.kursorDoBazy.execute(komenda)

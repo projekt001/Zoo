@@ -19,6 +19,10 @@ class TablicaPozostale(Tablica):
         self.resizeColumnsToContents()
         self.resizeRowsToContents()
         
+    def odswierz(self):
+        self.pobierzDane()
+        self.pobierzWymiary()
+        self.generacjaTabeli();
         
     def przyciskEdycji(self, indexWiersza):
         przyciskDoEdycji = QtGui.QPushButton(self)
@@ -96,12 +100,13 @@ class TablicaPozostaleZagrody(Tablica):
 
         self.resizeColumnsToContents()
         self.resizeRowsToContents()
-    
-    def dodajComboBox(self):
-        self.combo = QtGui.QComboBox()
-        self.combo.addItem("One")
         
-        self.setCellWidget(self.iloscWierszy, self.iloscKolumn, self.combo)
+    def odswierz(self):
+        self.usunComboBox()
+        self.pobierzDane()
+        self.pobierzWymiary()
+        self.generacjaTabeli();
+    
         
     def pobierzDane(self):
         self.daneZwierzeta = self.kontroler.laczTabele("ZAGRODY", 
@@ -146,10 +151,20 @@ class TablicaPozostaleZagrody(Tablica):
                 else:
                     self.przesuniecie = self.przesuniecie + 1
             self.przyciskEdycji(indexWiersza)
-
+        self.dodajComboBox()
         self.przyciskDodaniaWiersza();
            
-                           
+    def usunComboBox(self):
+        self.removeCellWidget(self.iloscWierszy, 1)
+    def dodajComboBox(self):
+        comboBox = QtGui.QComboBox()
+        
+        dane = self.kontroler.pobierzDane("TYPY_ZAGROD")
+        for indexDodawania in range(len(dane)):
+                comboBox.addItem(str(dane[indexDodawania][1]))
+                
+        self.setCellWidget(self.iloscWierszy, 1, comboBox)
+        
     def przyciskDodaniaWiersza(self):
         przyciskDodania = QtGui.QPushButton(self)
         przyciskDodania.setText('dodaj')
@@ -157,13 +172,24 @@ class TablicaPozostaleZagrody(Tablica):
         self.setCellWidget(self.iloscWierszy, self.iloscKolumn - self.przesuniecie, przyciskDodania)
             
     def dodajWiersz(self):
-        widget = self.item(self.iloscWierszy, 
-                           self.iloscKolumn - self.przesuniecie - 1)
-        if(widget == None):
+        self.listaWidgetow = []
+        self.listaWidgetow.append(self.item(self.iloscWierszy, 0))
+        self.listaWidgetow.append(self.cellWidget(self.iloscWierszy, 1))
+        
+        if( (self.listaWidgetow[0] == None) or (self.listaWidgetow[1] == None) ):
             print " pole jest puste"
         else:
+            
+            self.listaDoZapisania = []
+            self.listaDoZapisania.append(self.listaWidgetow[0].text())
+            self.listaDoZapisania.append(self.listaWidgetow[1].currentText())
+            
+            self.listaDoZapisania[1] = self.kontroler.pobierzIdPoNazwie("TYPY_ZAGROD",
+                                                                        "Nazwa_Typ_Zagrody",
+                                                                        self.listaDoZapisania[1])
+            
             self.kontroler.zapiszWBazie(self.nazwaTabeli, 
                                         self.opisZwierzeta, 
-                                        [widget.text()]);
+                                        self.listaDoZapisania);
             self.odswierz()
         

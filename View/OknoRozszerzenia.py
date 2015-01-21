@@ -45,19 +45,20 @@ class OknoRozszerzeniaPozostale(OknoRozszerzenia):
         
         self.przyciskZapisu = QtGui.QPushButton("zapisz")
         self.verticalLayout = QtGui.QVBoxLayout(self)
+        self.listaWidgetow  = []
         
         for idxPolaTekstowego in range(len(self.nazwaKolumn)):
-            
-            self.poleTekstowe.append(str(aktualnaWartosc[idxPolaTekstowego + 1]))
+            self.listaWidgetow.append(QtGui.QLineEdit(str(aktualnaWartosc[idxPolaTekstowego + 1])))
             self.verticalLayout.addWidget(QtGui.QLabel(str(self.nazwaKolumn[idxPolaTekstowego])))
-            self.verticalLayout.addWidget(QtGui.QLineEdit((self.poleTekstowe[idxPolaTekstowego])))
+            self.verticalLayout.addWidget(self.listaWidgetow[0])
             
             
         self.verticalLayout.addWidget(self.przyciskZapisu)
-        self.przyciskZapisu.clicked.connect(lambda: self.zapisz(self.poleTekstowe))
+        self.przyciskZapisu.clicked.connect(self.zapisz)
         
-    def zapisz(self, poleDoZapisania):
-        print "poleDoZapisania!!! = " + str(poleDoZapisania)
+    def zapisz(self):
+        poleDoZapisania = []
+        poleDoZapisania.append(self.listaWidgetow[0].text())
         self.kontroler.modyfikujWartoscWTabeli(self.nazwaTabeli,
                                                self.opisTabeli,
                                                self.kluczGlowny, 
@@ -90,25 +91,20 @@ class OknoRozszerzeniaZagrody(OknoRozszerzenia):
                                                                   "Nazwa_Typ_Zagrody",
                                                                    self.kluczGlowny)
         
-        print aktualnaWartosc
-        
         self.poleTekstowe = []
         
         self.przyciskZapisu = QtGui.QPushButton("zapisz")
         self.verticalLayout = QtGui.QVBoxLayout(self)
         
-        uzyteczneIndexy = [1, 3]
-        
-        self.poleTekstowe.append(str(aktualnaWartosc[1]))
+        self.listaWidgetow = []
+        self.listaWidgetow.append(QtGui.QLineEdit(str(aktualnaWartosc[1])))
         self.verticalLayout.addWidget(QtGui.QLabel(str(self.nazwaKolumn[0])))
-        self.verticalLayout.addWidget(QtGui.QLineEdit(self.poleTekstowe[0]))
+        self.verticalLayout.addWidget(self.listaWidgetow[0])
         
-        self.poleTekstowe.append(str(aktualnaWartosc[3])) 
         self.verticalLayout.addWidget(QtGui.QLabel(str(self.nazwaKolumn[1])))
         
-        #self.verticalLayout.addWidget(QtGui.QLineEdit(self.poleTekstowe[1]))
-        
-        self.combo = QtGui.QComboBox()
+        self.listaWidgetow.append(QtGui.QComboBox())
+        self.combo= self.listaWidgetow[1]
         self.combo.addItem(str(aktualnaWartosc[3]))
         
         dane = self.kontroler.pobierzDane("TYPY_ZAGROD")
@@ -121,11 +117,13 @@ class OknoRozszerzeniaZagrody(OknoRozszerzenia):
         self.verticalLayout.addWidget(self.combo)
         self.verticalLayout.addWidget(self.przyciskZapisu)
         
-        self.przyciskZapisu.clicked.connect(lambda: self.zapisz(self.poleTekstowe, self.combo.currentText()))
+        self.przyciskZapisu.clicked.connect(self.zapisz)
         
-    def zapisz(self, poleDoZapisania, daneZComboBox):
-        
-        poleDoZapisania[1] = daneZComboBox
+    def zapisz(self):
+        poleDoZapisania = []
+        poleDoZapisania.append(self.listaWidgetow[0].text())
+        comboBox = self.listaWidgetow[1]
+        poleDoZapisania.append(comboBox.currentText());
         poleDoZapisania[1] = self.kontroler.pobierzIdPoNazwie("TYPY_ZAGROD",
                                                               "Nazwa_Typ_Zagrody",
                                                               poleDoZapisania[1])
