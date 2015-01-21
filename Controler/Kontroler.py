@@ -24,19 +24,43 @@ class Kontroler:
         except Warning, e:
             print str(e)
         
+    def pobierzIdPoNazwie(self,
+                          nazwaTabeli,
+                          nazwaKolumny,
+                          wartoscPola):
+        
+        komenda = "SELECT * FROM " +  nazwaTabeli + \
+                  " WHERE " + nazwaKolumny + " = '"+ str(wartoscPola) + "'"
+        
+        self.kursorDoBazy.execute(komenda)
+        dane = self.kursorDoBazy.fetchall()
+        return dane[0][0]
+    
+
     def modyfikujWartoscWTabeli(self,
                                 nazwaTabeli, 
                                 nazwaKolumn,
                                 kluczGlowny, 
                                 poleDoZapisania):
-        print "poleDoZapisania = " + str(poleDoZapisania)
+
+        print nazwaKolumn
         komenda = "UPDATE " + str(nazwaTabeli) + " SET " 
         
-        iloscKolumn = len(nazwaKolumn)
-        for indexKolumny in range(iloscKolumn):
-            komenda = komenda + str(nazwaKolumn[indexKolumny]) + " = " + str(poleDoZapisania[indexKolumny].text()) + " "
+        iloscKolumn = len(poleDoZapisania)
+        poleDoZapisaniaLista = []
         
-        komenda = komenda + " WHERE Id = "+ str(kluczGlowny)
+        for indexKolumny in range(iloscKolumn):
+            chwilowaZmienna = str(poleDoZapisania[indexKolumny])
+            if chwilowaZmienna.isdigit():
+                poleDoZapisaniaLista.append(chwilowaZmienna)
+            else:
+                poleDoZapisaniaLista.append("'" + chwilowaZmienna + "'")
+                
+        for indexKolumny in range(iloscKolumn):
+            print str(nazwaKolumn[indexKolumny + 1][0])
+            komenda = komenda + str(nazwaKolumn[indexKolumny + 1][0]) + " = " + str(poleDoZapisaniaLista[indexKolumny]) + ", "
+        
+        komenda = komenda[0:-2] + " WHERE Id = "+ str(kluczGlowny)
         
         print komenda
 
@@ -76,6 +100,24 @@ class Kontroler:
         dane = self.kursorDoBazy.fetchone()
                 
         return dane
+    
+    
+    def laczTabeleIPobierzWiersz(self, 
+                                 tabelaGlowna, 
+                                 tabelaDoDolaczenia, 
+                                 nazwaKluczaGlowna, 
+                                 nazwaKluczaDolaczenia, 
+                                 nazwaKolumnyDolaczenia,
+                                 kluczGlowny):
+
+        komenda  = "SELECT " +  tabelaGlowna + ".*, " + tabelaDoDolaczenia + "." + nazwaKolumnyDolaczenia + " FROM " + tabelaGlowna + \
+                   " LEFT JOIN " + tabelaDoDolaczenia + \
+                   " ON " + tabelaGlowna + "." + nazwaKluczaGlowna + " = " + tabelaDoDolaczenia + "." + nazwaKluczaDolaczenia + \
+                   " WHERE " + tabelaGlowna + ".Id =" + str(kluczGlowny)
+                   
+        self.kursorDoBazy.execute(komenda)
+        
+        return self.kursorDoBazy.fetchone()
     
     def znajdzElementWLiscie(self, znaczniki, element):
         return [item for item in range(len(znaczniki)) if znaczniki[item] == element]
@@ -130,8 +172,6 @@ class Kontroler:
         
         
         return self.kursorDoBazy.fetchall()
-    
-    #def znajdzIndexKolumny(self, opisTabeli, nazwaKolumny):
         
         
         
