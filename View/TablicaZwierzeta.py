@@ -67,3 +67,8 @@ class TablicaZwierzeta(Tablica):
         sender = self.sender()
         self.dialogTextBrowser = OknoRozszerzenia();
         self.dialogTextBrowser.exec_()
+        
+    def odswierz(self):
+        self.pobierzDane()
+        self.pobierzWymiary()
+        self.generacjaTabeli();

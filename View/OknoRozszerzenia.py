@@ -141,6 +141,19 @@ class OknoRozszerzeniaZagrody(OknoRozszerzenia):
         self.close()
 #****************************************
 
+class ZwierzetaComboBox(QtGui.QComboBox):
+    def __init__(self, parent = None):
+        super(ZwierzetaComboBox, self).__init__(parent)
+    def pobierzTekst(self):
+        return self.currentText()
+
+class ZwierzetaQLineEdit(QtGui.QLineEdit):
+    def __init__(self, tekst, parent = None):
+        super(ZwierzetaQLineEdit, self).__init__(tekst, parent)
+    def pobierzTekst(self):
+        return self.text()
+
+
 class OknoRozszerzeniaZwierzeta(OknoRozszerzenia):
     def __init__(self, 
                  kluczGlowny, 
@@ -159,45 +172,44 @@ class OknoRozszerzeniaZwierzeta(OknoRozszerzenia):
                                                         parent)
     def generujWidok(self):
         
+        tabeleDoLaczenia = ["GATUNKI", "ZAGRODY"]
+        aktualnaWartosc = self.kontroler.laczTabeleWenetrznieIPobierzWiersz("ZWIERZETA",
+                                                                            [["GATUNKI", "GATUNEK_Id", "Id"], ["ZAGRODY", "ZAGRODA_Id", "Id"]])
+        self.listaWidgetow = []
+        self.listaWidgetow.append(ZwierzetaQLineEdit(str(aktualnaWartosc[1])))
+        self.listaWidgetow.append(ZwierzetaQLineEdit(str(aktualnaWartosc[2])))
+        self.listaWidgetow.append(ZwierzetaQLineEdit(str(aktualnaWartosc[3])))
+        self.listaWidgetow.append(ZwierzetaQLineEdit(str(aktualnaWartosc[4])))
         
-        aktualnaWartosc = self.kontroler.laczTabeleIPobierzWiersz(self.nazwaTabeli, 
-                                                                  "TYPY_ZAGROD",
-                                                                  "TYPY_ZAGROD_Id",
-                                                                  "Id",
-                                                                  "Nazwa_Typ_Zagrody",
-                                                                   self.kluczGlowny)
         
-        #self.poleTekstowe = []
         
+        combo1= ZwierzetaComboBox()
+        combo1.addItem(str(aktualnaWartosc[8]))
+        
+        dane = self.kontroler.pobierzDane("GATUNKI")
+        
+        for indexDodawania in range(len(dane)):
+            if (str(dane[indexDodawania][1]) != str(aktualnaWartosc[8])):
+                combo1.addItem(str(dane[indexDodawania][1]))
+                
+        self.listaWidgetow.append(combo1) 
+        
+        combo2= ZwierzetaComboBox()
+        combo2.addItem(str(aktualnaWartosc[10]))
+        
+        dane = self.kontroler.pobierzDane("ZAGRODY")
+        
+        for indexDodawania in range(len(dane)):
+            if (str(dane[indexDodawania][1]) != str(aktualnaWartosc[10])):
+                combo2.addItem(str(dane[indexDodawania][1]))
+                
+        self.listaWidgetow.append(combo2) 
 
-        
-        #self.listaWidgetow = []
         self.verticalLayout = QtGui.QVBoxLayout(self)
         for indexKolumny in range(len(self.nazwaKolumn)):
             self.verticalLayout.addWidget(QtGui.QLabel(str(self.nazwaKolumn[indexKolumny])))
-            
-        #self.listaWidgetow.append(QtGui.QLineEdit(str(aktualnaWartosc[1])))
-        #self.verticalLayout.addWidget(QtGui.QLabel(str(self.nazwaKolumn[0])))
-        #self.verticalLayout.addWidget(self.listaWidgetow[0])
-        
-        #self.verticalLayout.addWidget(QtGui.QLabel(str(self.nazwaKolumn[1])))
-        
-        #self.listaWidgetow.append(QtGui.QComboBox())
-        #self.combo= self.listaWidgetow[1]
-        #self.combo.addItem(str(aktualnaWartosc[3]))
-        
-        #dane = self.kontroler.pobierzDane("TYPY_ZAGROD")
-        
-        #for indexDodawania in range(len(dane)):
-            #if (str(dane[indexDodawania][1]) != str(aktualnaWartosc[3])):
-                #self.combo.addItem(str(dane[indexDodawania][1]))
-
-        #self.verticalLayout.addWidget(self.combo)
-        #self.verticalLayout.addWidget(self.combo)
-        
-        
-        
-        
+            self.verticalLayout.addWidget(self.listaWidgetow[indexKolumny])
+             
         self.przyciskZapisu = QtGui.QPushButton("zapisz")
         self.verticalLayout.addWidget(self.przyciskZapisu)
         self.przyciskZapisu.clicked.connect(self.zapisz)

@@ -106,6 +106,17 @@ class Kontroler:
         return dane
     
     
+    def laczTabeleWenetrznieIPobierzWiersz(self, tabelaGlowna, daneDoLaczeniaTabel):
+
+        komenda  = "SELECT * FROM ZWIERZETA"
+        for indexLaczenia in range(len(daneDoLaczeniaTabel)):
+             komenda = komenda + " JOIN " + daneDoLaczeniaTabel[indexLaczenia][0] + " ON " \
+                       + tabelaGlowna + "." + daneDoLaczeniaTabel[indexLaczenia][1] + "=" + \
+                       daneDoLaczeniaTabel[indexLaczenia][0] + "." + daneDoLaczeniaTabel[indexLaczenia][2]
+        
+        self.kursorDoBazy.execute(komenda)
+        return self.kursorDoBazy.fetchone()
+    
     def laczTabeleIPobierzWiersz(self, 
                                  tabelaGlowna, 
                                  tabelaDoDolaczenia, 
@@ -119,6 +130,8 @@ class Kontroler:
                    " ON " + tabelaGlowna + "." + nazwaKluczaGlowna + " = " + tabelaDoDolaczenia + "." + nazwaKluczaDolaczenia + \
                    " WHERE " + tabelaGlowna + ".Id =" + str(kluczGlowny)
                    
+        print komenda
+        
         self.kursorDoBazy.execute(komenda)
         
         return self.kursorDoBazy.fetchone()
