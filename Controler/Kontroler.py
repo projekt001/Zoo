@@ -33,6 +33,8 @@ class Kontroler:
         
         komenda = "SELECT * FROM " +  nazwaTabeli + \
                   " WHERE " + nazwaKolumny + " = '"+ str(wartoscPola) + "'"
+                  
+        print komenda
         
         self.kursorDoBazy.execute(komenda)
         dane = self.kursorDoBazy.fetchall()
@@ -143,16 +145,12 @@ class Kontroler:
             self.kursorDoBazy.execute("""INSERT INTO TYPY_ZAGROD (Nazwa_Typ_Zagrody) VALUES('Duza')""")
             self.kursorDoBazy.execute("""INSERT INTO TYPY_ZAGROD (Nazwa_Typ_Zagrody) VALUES('Wielka')""")
             
-            self.kursorDoBazy.execute("""INSERT INTO ZAGRODY (Powierzchnia, TYPY_ZAGROD_Id)   
-                                                             VALUES(15, 1)""")
-            
-            self.kursorDoBazy.execute("""INSERT INTO ZAGRODY (Powierzchnia, TYPY_ZAGROD_Id)   
-                                                             VALUES(40, 2)""")
-            self.kursorDoBazy.execute("""INSERT INTO ZAGRODY (Powierzchnia, TYPY_ZAGROD_Id)   
-                                                             VALUES(90, 3)""")
-            
-            self.kursorDoBazy.execute("""INSERT INTO ZAGRODY (Powierzchnia, TYPY_ZAGROD_Id)   
-                                                             VALUES(90, 1)""")
+            self.kursorDoBazy.execute("""INSERT INTO ZAGRODY (Nazwa_Zagrody, Powierzchnia, TYPY_ZAGROD_Id)   
+                                                             VALUES('Sloniarnia',15, 1)""")
+            self.kursorDoBazy.execute("""INSERT INTO ZAGRODY (Nazwa_Zagrody, Powierzchnia, TYPY_ZAGROD_Id)   
+                                                             VALUES('Malpiarnia', 40, 2)""")
+            self.kursorDoBazy.execute("""INSERT INTO ZAGRODY (Nazwa_Zagrody, Powierzchnia, TYPY_ZAGROD_Id)   
+                                                             VALUES('Wybieg', 90, 3)""")
                            
             self.kursorDoBazy.execute("""INSERT INTO ZWIERZETA (Nazwa_Zwierzecia, Wzrost, Waga, Wiek, GATUNEK_Id, ZAGRODA_Id) 
                                                                VALUES('Hipopotam', 120, 10, 20, 1, 1)""")

@@ -47,6 +47,7 @@ class TabeleWBazie:
         
         sqlStworzZagrody = """CREATE TABLE IF NOT EXISTS ZAGRODY (
                               Id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                              Nazwa_Zagrody CHAR(20),
                               Powierzchnia INT NOT NULL,
                               TYPY_ZAGROD_Id INT NOT NULL,
                               FOREIGN KEY (TYPY_ZAGROD_Id) REFERENCES TYPY_ZAGROD(Id))"""

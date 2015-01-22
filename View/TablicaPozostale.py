@@ -155,7 +155,8 @@ class TablicaPozostaleZagrody(Tablica):
         self.przyciskDodaniaWiersza();
            
     def usunComboBox(self):
-        self.removeCellWidget(self.iloscWierszy, 1)
+        self.removeCellWidget(self.iloscWierszy, 2)
+        
     def dodajComboBox(self):
         comboBox = QtGui.QComboBox()
         
@@ -163,7 +164,7 @@ class TablicaPozostaleZagrody(Tablica):
         for indexDodawania in range(len(dane)):
                 comboBox.addItem(str(dane[indexDodawania][1]))
                 
-        self.setCellWidget(self.iloscWierszy, 1, comboBox)
+        self.setCellWidget(self.iloscWierszy, 2, comboBox)
         
     def przyciskDodaniaWiersza(self):
         przyciskDodania = QtGui.QPushButton(self)
@@ -174,19 +175,23 @@ class TablicaPozostaleZagrody(Tablica):
     def dodajWiersz(self):
         self.listaWidgetow = []
         self.listaWidgetow.append(self.item(self.iloscWierszy, 0))
-        self.listaWidgetow.append(self.cellWidget(self.iloscWierszy, 1))
+        self.listaWidgetow.append(self.item(self.iloscWierszy, 1))
+        self.listaWidgetow.append(self.cellWidget(self.iloscWierszy, 2))
         
-        if( (self.listaWidgetow[0] == None) or (self.listaWidgetow[1] == None) ):
+        if( (self.listaWidgetow[0] == None) or 
+            (self.listaWidgetow[1] == None) or
+            (self.listaWidgetow[2] == None) ):
             print " pole jest puste"
         else:
             
             self.listaDoZapisania = []
             self.listaDoZapisania.append(self.listaWidgetow[0].text())
-            self.listaDoZapisania.append(self.listaWidgetow[1].currentText())
+            self.listaDoZapisania.append(self.listaWidgetow[1].text())
+            self.listaDoZapisania.append(self.listaWidgetow[2].currentText())
             
-            self.listaDoZapisania[1] = self.kontroler.pobierzIdPoNazwie("TYPY_ZAGROD",
+            self.listaDoZapisania[2] = self.kontroler.pobierzIdPoNazwie("TYPY_ZAGROD",
                                                                         "Nazwa_Typ_Zagrody",
-                                                                        self.listaDoZapisania[1])
+                                                                        self.listaDoZapisania[2])
             
             self.kontroler.zapiszWBazie(self.nazwaTabeli, 
                                         self.opisZwierzeta, 
