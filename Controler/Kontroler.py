@@ -6,7 +6,6 @@ class Kontroler:
         
     def zapiszWBazie(self, nazwaTabeli, opisTabeli, daneDoWstawienia):
         
-        print opisTabeli
         self.iloscKolumn  = len(opisTabeli)
         komenda = "INSERT INTO " + nazwaTabeli + " ("
         
@@ -34,6 +33,9 @@ class Kontroler:
                           nazwaKolumny,
                           wartoscPola):
         
+        print nazwaTabeli
+        print nazwaKolumny
+        print wartoscPola
         komenda = "SELECT * FROM " +  nazwaTabeli + \
                   " WHERE " + nazwaKolumny + " = '"+ str(wartoscPola) + "'"
                   
@@ -128,7 +130,7 @@ class Kontroler:
                        daneDoLaczeniaTabel[indexLaczenia][0] + "." + daneDoLaczeniaTabel[indexLaczenia][2]
         komenda = komenda +" WHERE " + whereStatement + "." + nazwaKluczaTabelaGlowna +" =" + str(kluczGlowny)
         
-        
+        print "ZZZZ " + str(komenda)
         self.kursorDoBazy.execute(komenda)
         return self.kursorDoBazy.fetchall()
     

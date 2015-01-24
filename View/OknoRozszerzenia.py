@@ -179,7 +179,7 @@ class OknoRozszerzeniaZwierzeta(OknoRozszerzenia):
                                                       ["ZAGRODY", "ZAGRODA_Id", "Id"]],
                                                       self.kluczGlowny,
                                                       "ZWIERZETA")
-        print "aktualnaWartosc" + str(aktualnaWartosc)
+        
         self.listaWidgetow = []
         self.listaWidgetow.append(ZwierzetaQLineEdit(str(aktualnaWartosc[0][1])))
         self.listaWidgetow.append(ZwierzetaQLineEdit(str(aktualnaWartosc[0][2])))
@@ -217,19 +217,38 @@ class OknoRozszerzeniaZwierzeta(OknoRozszerzenia):
             self.verticalLayout.addWidget(self.listaWidgetow[indexKolumny])
             
             
-        self.tabelaPozywienia = TablicaLaczaca(self.kontroler, 
-                                               self.kluczGlowny, 
-                                               "POZYWIENIA_Id",
-                                               "LACZ_ZWIERZETA_POZYWIENIA",
-                                               "POZYWIENIA",
-                                               "ZWIERZETA")
-        
-        self.tabelaPozywienia.wyswietlTablice();
-        self.verticalLayout.addWidget(self.tabelaPozywienia)
+        self.dodajPozywienia()
+        self.dodajChoroby()
         
         self.przyciskZapisu = QtGui.QPushButton("zapisz")
         self.verticalLayout.addWidget(self.przyciskZapisu)
         self.przyciskZapisu.clicked.connect(self.zapisz)
+        
+    def dodajChoroby(self):
+        self.verticalLayout.addWidget(QtGui.QLabel("Choroby"))
+
+        self.tabelaChoroby = TablicaLaczaca(self.kontroler, 
+                                               [self.kluczGlowny, 0],
+                                               ["ZWIERZETA_Id", "CHOROBY_Id"],
+                                               ["LACZ_ZWIERZETA_CHOROBY", "ZWIERZETA", "CHOROBY"],
+                                               'Nazwa_Choroby')
+
+        
+        self.tabelaChoroby.wyswietlTablice();
+        self.verticalLayout.addWidget(self.tabelaChoroby)
+        
+    def dodajPozywienia(self):
+        self.verticalLayout.addWidget(QtGui.QLabel("Pozywienia"))
+
+        self.tabelaPozywienia = TablicaLaczaca(self.kontroler, 
+                                               [self.kluczGlowny, 0],
+                                               ["ZWIERZETA_Id", "POZYWIENIA_Id"],
+                                               ["LACZ_ZWIERZETA_POZYWIENIA", "ZWIERZETA", "POZYWIENIA"],
+                                               'Nazwa_Pozywienia')
+        
+        
+        self.tabelaPozywienia.wyswietlTablice();
+        self.verticalLayout.addWidget(self.tabelaPozywienia)
         
     def zapisz(self):
         polaDoZapisania = []

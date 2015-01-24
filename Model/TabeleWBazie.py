@@ -80,8 +80,8 @@ class TabeleWBazie:
                               Id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
                               ZWIERZETA_Id INT NOT NULL,
                               POZYWIENIA_Id INT NOT NULL,
-                              FOREIGN KEY (ZWIERZETA_Id) REFERENCES ZWIERZETA (Id),
-                              FOREIGN KEY (POZYWIENIA_Id) REFERENCES POZYWIENIA (Id))"""
+                              FOREIGN KEY (ZWIERZETA_Id) REFERENCES ZWIERZETA (Id) ON DELETE CASCADE ON UPDATE CASCADE,
+                              FOREIGN KEY (POZYWIENIA_Id) REFERENCES POZYWIENIA (Id) ON DELETE CASCADE ON UPDATE CASCADE)"""
         
             
         try:
@@ -94,8 +94,8 @@ class TabeleWBazie:
                                   Id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
                                   ZWIERZETA_Id INT NOT NULL,
                                   CHOROBY_Id INT NOT NULL,
-                                  FOREIGN KEY (ZWIERZETA_Id) REFERENCES ZWIERZETA (Id),
-                                  FOREIGN KEY (CHOROBY_Id) REFERENCES CHOROBY (Id))"""
+                                  FOREIGN KEY (ZWIERZETA_Id) REFERENCES ZWIERZETA (Id) ON DELETE CASCADE ON UPDATE CASCADE,
+                                  FOREIGN KEY (CHOROBY_Id) REFERENCES CHOROBY (Id) ON DELETE CASCADE ON UPDATE CASCADE)"""
         
             
         try:
