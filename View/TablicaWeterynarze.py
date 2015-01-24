@@ -24,7 +24,6 @@ class WeterynarzeQTableWidget(QtGui.QTableWidgetItem):
 class TablicaWeterynarze(Tablica):
     def __init__(self, kontroler, nazwaTabeli, parent):
         super(TablicaWeterynarze, self).__init__(kontroler, parent)
-        
         self.pobierzInformacjeOTabeli(nazwaTabeli)
         self.pobierzDaneDoWyswietlenia(["Id"])
         self.przystosujNazwyKolumn()
@@ -42,7 +41,7 @@ class TablicaWeterynarze(Tablica):
         
     def pobierzDane(self):
         self.daneTabeli = self.kontroler.laczIPobierzWszystkie("WETERYNARZE",
-                                                                [["SPECJALIZACJE", "SPECJALIZACJE_Id", "Id"]])
+                                                              [["SPECJALIZACJE", "SPECJALIZACJE_Id", "Id"]])
     def pobierzIndeksyDoWyswietlenia(self):
         self.listaDoWyswietlenia = [1, 2, 3, 6]
         
@@ -132,7 +131,7 @@ class TablicaWeterynarze(Tablica):
                                                                              self.listaDoZapisania[5]))
             
             self.kontroler.zapiszWBazie(self.nazwaTabeli, 
-                                        self.opisWeterynarze, 
+                                        self.opisTabeli, 
                                         self.listaDoZapisania);
             self.odswierz()
             
@@ -149,7 +148,7 @@ class TablicaWeterynarze(Tablica):
                                                            self.nazwyKolumn,
                                                            self.kontroler,
                                                            self.elementyDoWykluczenia,
-                                                           self.opisWeterynarze,
+                                                           self.opisTabeli,
                                                            self);
         self.dialogTextBrowser.generujWidok()
         self.dialogTextBrowser.exec_()

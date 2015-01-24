@@ -135,7 +135,7 @@ class TablicaZwierzeta(Tablica):
                                                                              self.listaDoZapisania[5]))
             
             self.kontroler.zapiszWBazie(self.nazwaTabeli, 
-                                        self.opisZwierzeta, 
+                                        self.opisTabeli, 
                                         self.listaDoZapisania);
             self.odswierz()
             
@@ -152,7 +152,7 @@ class TablicaZwierzeta(Tablica):
                                                            self.nazwyKolumn,
                                                            self.kontroler,
                                                            self.elementyDoWykluczenia,
-                                                           self.opisZwierzeta,
+                                                           self.opisTabeli,
                                                            self);
         self.dialogTextBrowser.generujWidok()
         self.dialogTextBrowser.exec_()

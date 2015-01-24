@@ -39,7 +39,7 @@ class TablicaPozostale(Tablica):
                                                            self.nazwyKolumn,
                                                            self.kontroler,
                                                            self.elementyDoWykluczenia,
-                                                           self.opisZwierzeta,
+                                                           self.opisTabeli,
                                                            self);
         self.dialogTextBrowser.generujWidok()
         self.dialogTextBrowser.exec_()
@@ -97,7 +97,7 @@ class TablicaPozostale(Tablica):
             print " pole jest puste"
         else:
             self.kontroler.zapiszWBazie(self.nazwaTabeli, 
-                                        self.opisZwierzeta, 
+                                        self.opisTabeli, 
                                         [str(widget.text())]);
             self.odswierz()
             
@@ -145,7 +145,7 @@ class TablicaPozostaleZagrody(Tablica):
                                                            self.nazwyKolumn,
                                                            self.kontroler,
                                                            self.elementyDoWykluczenia,
-                                                           self.opisZwierzeta,
+                                                           self.opisTabeli,
                                                            self);
         self.dialogTextBrowser.generujWidok()
         self.dialogTextBrowser.exec_()
@@ -226,7 +226,7 @@ class TablicaPozostaleZagrody(Tablica):
                                                                             self.listaDoZapisania[2]))
             
             self.kontroler.zapiszWBazie(self.nazwaTabeli, 
-                                        self.opisZwierzeta, 
+                                        self.opisTabeli, 
                                         self.listaDoZapisania);
             self.odswierz()
         

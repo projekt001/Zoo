@@ -305,42 +305,28 @@ class OknoRozszerzeniaWeterynarze(OknoRozszerzenia):
                                                         parent)
     def generujWidok(self):
         
-        tabeleDoLaczenia = ["GATUNKI", "ZAGRODY"]
-        aktualnaWartosc = self.kontroler.laczIFiltruj("ZWIERZETA",
-                                                     [["GATUNKI", "GATUNEK_Id", "Id"], 
-                                                      ["ZAGRODY", "ZAGRODA_Id", "Id"]],
+        aktualnaWartosc = self.kontroler.laczIFiltruj("WETERYNARZE",
+                                                     [["SPECJALIZACJE", "SPECJALIZACJE_Id", "Id"]],
                                                       self.kluczGlowny,
-                                                      "ZWIERZETA")
+                                                      "WETERYNARZE")
         
         self.listaWidgetow = []
         self.listaWidgetow.append(WeterynarzeQLineEdit(str(aktualnaWartosc[0][1])))
         self.listaWidgetow.append(WeterynarzeQLineEdit(str(aktualnaWartosc[0][2])))
         self.listaWidgetow.append(WeterynarzeQLineEdit(str(aktualnaWartosc[0][3])))
-        self.listaWidgetow.append(WeterynarzeQLineEdit(str(aktualnaWartosc[0][4])))
         
         
         
         combo1= WeterynarzeComboBox()
-        combo1.addItem(str(aktualnaWartosc[0][8]))
+        combo1.addItem(str(aktualnaWartosc[0][6]))
         
-        dane = self.kontroler.pobierzDane("GATUNKI")
+        dane = self.kontroler.pobierzDane("SPECJALIZACJE")
         
         for indexDodawania in range(len(dane)):
-            if (str(dane[indexDodawania][1]) != str(aktualnaWartosc[0][8])):
+            if (str(dane[indexDodawania][1]) != str(aktualnaWartosc[0][6])):
                 combo1.addItem(str(dane[indexDodawania][1]))
                 
-        self.listaWidgetow.append(combo1) 
-        
-        combo2= WeterynarzeComboBox()
-        combo2.addItem(str(aktualnaWartosc[0][10]))
-        
-        dane = self.kontroler.pobierzDane("ZAGRODY")
-        
-        for indexDodawania in range(len(dane)):
-            if (str(dane[indexDodawania][1]) != str(aktualnaWartosc[0][10])):
-                combo2.addItem(str(dane[indexDodawania][1]))
-                
-        self.listaWidgetow.append(combo2) 
+        self.listaWidgetow.append(combo1)
 
         self.verticalLayout = QtGui.QVBoxLayout(self)
 
@@ -349,52 +335,35 @@ class OknoRozszerzeniaWeterynarze(OknoRozszerzenia):
             self.verticalLayout.addWidget(self.listaWidgetow[indexKolumny])
             
             
-        self.dodajPozywienia()
-        self.dodajChoroby()
+        self.dodajZagrody()
         
         self.przyciskZapisu = QtGui.QPushButton("zapisz")
         self.verticalLayout.addWidget(self.przyciskZapisu)
         self.przyciskZapisu.clicked.connect(self.zapisz)
         
-    def dodajChoroby(self):
-        self.verticalLayout.addWidget(QtGui.QLabel("Choroby"))
+    def dodajZagrody(self):
+        self.verticalLayout.addWidget(QtGui.QLabel("Zagrody"))
 
-        self.tabelaChoroby = TablicaLaczaca(self.kontroler, 
-                                               [self.kluczGlowny, 0],
-                                               ["ZWIERZETA_Id", "CHOROBY_Id"],
-                                               ["LACZ_ZWIERZETA_CHOROBY", "ZWIERZETA", "CHOROBY"],
-                                               'Nazwa_Choroby')
-
+        self.tabelaZagrody= TablicaLaczaca(self.kontroler, 
+                                            [self.kluczGlowny, 0],
+                                            ["WETERYNARZE_Id", "ZAGRODY_Id"],
+                                            ["LACZ_ZAGRODY_WETERYNARZE", "WETERYNARZE", "ZAGRODY"],
+                                            'Nazwa_Zagrody')
         
-        self.tabelaChoroby.wyswietlTablice();
-        self.verticalLayout.addWidget(self.tabelaChoroby)
+        self.tabelaZagrody.wyswietlTablice();
+        self.verticalLayout.addWidget(self.tabelaZagrody)
         
-    def dodajPozywienia(self):
-        self.verticalLayout.addWidget(QtGui.QLabel("Pozywienia"))
-
-        self.tabelaPozywienia = TablicaLaczaca(self.kontroler, 
-                                               [self.kluczGlowny, 0],
-                                               ["ZWIERZETA_Id", "POZYWIENIA_Id"],
-                                               ["LACZ_ZWIERZETA_POZYWIENIA", "ZWIERZETA", "POZYWIENIA"],
-                                               'Nazwa_Pozywienia')
-        
-        
-        self.tabelaPozywienia.wyswietlTablice();
-        self.verticalLayout.addWidget(self.tabelaPozywienia)
         
     def zapisz(self):
         polaDoZapisania = []
         for indexPol in range(len(self.listaWidgetow)):
             polaDoZapisania.append(self.listaWidgetow[indexPol].pobierzTekst())
             
-        polaDoZapisania[4] = self.kontroler.pobierzIdPoNazwie("GATUNKI",
-                                                              "Nazwa_Gatunku",
-                                                              polaDoZapisania[4])
+        polaDoZapisania[3] = self.kontroler.pobierzIdPoNazwie("SPECJALIZACJE",
+                                                              "Nazwa_Specjalizacji",
+                                                              polaDoZapisania[3])
         
-        polaDoZapisania[5] = self.kontroler.pobierzIdPoNazwie("ZAGRODY",
-                                                              "Nazwa_Zagrody",
-                                                              polaDoZapisania[5])
-        
+
         self.kontroler.modyfikujWartoscWTabeli(self.nazwaTabeli,
                                                self.opisTabeli,
                                                self.kluczGlowny, 

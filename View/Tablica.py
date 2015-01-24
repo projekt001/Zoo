@@ -11,11 +11,11 @@ class Tablica(QtGui.QTableWidget):
         
     def pobierzInformacjeOTabeli(self, nazwaTabeli):
         self.nazwaTabeli   = nazwaTabeli
-        self.opisZwierzeta = self.kontroler.pobierzOpisTabeli(self.nazwaTabeli)
+        self.opisTabeli = self.kontroler.pobierzOpisTabeli(self.nazwaTabeli)
         
     def pobierzDaneDoWyswietlenia(self, elementyDoWykluczenia):
         self.elementyDoWykluczenia = elementyDoWykluczenia;
-        self.listaNieDoWyswietlenia, self.nazwyKolumn = self.kontroler.pobierzWlasciweDane(self.opisZwierzeta,
+        self.listaNieDoWyswietlenia, self.nazwyKolumn = self.kontroler.pobierzWlasciweDane(self.opisTabeli,
                                                                                            self.elementyDoWykluczenia)
         
     def pobierzWymiary(self):
