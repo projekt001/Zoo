@@ -209,24 +209,29 @@ class OknoRozszerzeniaZwierzeta(OknoRozszerzenia):
         for indexKolumny in range(len(self.nazwaKolumn)):
             self.verticalLayout.addWidget(QtGui.QLabel(str(self.nazwaKolumn[indexKolumny])))
             self.verticalLayout.addWidget(self.listaWidgetow[indexKolumny])
-             
+            
+            
         self.przyciskZapisu = QtGui.QPushButton("zapisz")
         self.verticalLayout.addWidget(self.przyciskZapisu)
         self.przyciskZapisu.clicked.connect(self.zapisz)
         
     def zapisz(self):
-        poleDoZapisania = []
-        poleDoZapisania.append(self.listaWidgetow[0].text())
-        comboBox = self.listaWidgetow[1]
-        poleDoZapisania.append(comboBox.currentText());
-        poleDoZapisania[1] = self.kontroler.pobierzIdPoNazwie("TYPY_ZAGROD",
-                                                              "Nazwa_Typ_Zagrody",
-                                                              poleDoZapisania[1])
+        polaDoZapisania = []
+        for indexPol in range(len(self.listaWidgetow)):
+            polaDoZapisania.append(self.listaWidgetow[indexPol].pobierzTekst())
+            
+        polaDoZapisania[4] = self.kontroler.pobierzIdPoNazwie("GATUNKI",
+                                                              "Nazwa_Gatunku",
+                                                              polaDoZapisania[4])
+        
+        polaDoZapisania[5] = self.kontroler.pobierzIdPoNazwie("ZAGRODY",
+                                                              "Nazwa_Zagrody",
+                                                              polaDoZapisania[5])
         
         self.kontroler.modyfikujWartoscWTabeli(self.nazwaTabeli,
                                                self.opisTabeli,
                                                self.kluczGlowny, 
-                                               poleDoZapisania)
+                                               polaDoZapisania)
         self.close()
             
 
