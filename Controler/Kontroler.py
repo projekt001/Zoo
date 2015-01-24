@@ -181,7 +181,25 @@ class Kontroler:
 
     def dodajRekordy(self):
         try:
-
+                                  
+            self.kursorDoBazy.execute("""INSERT INTO SPECJALIZACJE (Nazwa_Specjalizacji) 
+                                         VALUES('Chirurg')""")
+            
+            self.kursorDoBazy.execute("""INSERT INTO SPECJALIZACJE (Nazwa_Specjalizacji)
+                                        VALUES('Ortopeda')""")
+            
+            self.kursorDoBazy.execute("""INSERT INTO SPECJALIZACJE (Nazwa_Specjalizacji)
+                                        VALUES('Kardiolog')""")
+                       
+            self.kursorDoBazy.execute("""INSERT INTO WETERYNARZE (Imie, Nazwisko, Wiek, SPECJALIZACJE_Id)
+                                        VALUES('Jan', 'Kowalski', 32, 1)""")
+                       
+            self.kursorDoBazy.execute("""INSERT INTO WETERYNARZE (Imie, Nazwisko, Wiek, SPECJALIZACJE_Id)
+                                        VALUES('Tomasz', 'Opanski', 64, 2)""")
+                       
+            self.kursorDoBazy.execute("""INSERT INTO WETERYNARZE (Imie, Nazwisko, Wiek, SPECJALIZACJE_Id)
+                                        VALUES('Edward', 'Szyba', 45, 3)""")
+            
             self.kursorDoBazy.execute("""INSERT INTO POZYWIENIA (Nazwa_Pozywienia) VALUES('Buraki')""")
             self.kursorDoBazy.execute("""INSERT INTO POZYWIENIA (Nazwa_Pozywienia) VALUES('Marchew')""")
             self.kursorDoBazy.execute("""INSERT INTO POZYWIENIA (Nazwa_Pozywienia) VALUES('JABLKA')""")

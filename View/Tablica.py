@@ -19,9 +19,9 @@ class Tablica(QtGui.QTableWidget):
                                                                                            self.elementyDoWykluczenia)
         
     def pobierzWymiary(self):
-        self.iloscWierszy  = len(self.daneZwierzeta)
+        self.iloscWierszy  = len(self.daneTabeli)
         if(self.iloscWierszy > 0):
-            self.iloscKolumn   = len(self.daneZwierzeta[0])
+            self.iloscKolumn   = len(self.daneTabeli[0])
             return 1
         else:
             return 0

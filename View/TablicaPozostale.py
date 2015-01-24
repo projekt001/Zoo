@@ -20,6 +20,7 @@ class TablicaPozostale(Tablica):
         self.resizeRowsToContents()
         
     def odswierz(self):
+        self.ustawRozmiar(0, 0)
         self.pobierzDane()
         self.pobierzWymiary()
         self.generacjaTabeli();
@@ -27,7 +28,7 @@ class TablicaPozostale(Tablica):
     def przyciskEdycji(self, indexWiersza):
         przyciskDoEdycji = QtGui.QPushButton(self)
         przyciskDoEdycji.setText('edytuj')
-        przyciskDoEdycji.kluczGlowny = self.daneZwierzeta[indexWiersza][0];
+        przyciskDoEdycji.kluczGlowny = self.daneTabeli[indexWiersza][0];
         przyciskDoEdycji.clicked.connect(self.edytujKolumne)
         self.setCellWidget(indexWiersza, self.iloscKolumn - self.przesuniecie, przyciskDoEdycji)
         
@@ -46,28 +47,36 @@ class TablicaPozostale(Tablica):
         
     
     def pobierzDane(self):
-        self.daneZwierzeta = self.kontroler.pobierzDane(self.nazwaTabeli)
+        self.daneTabeli = self.kontroler.pobierzDane(self.nazwaTabeli)
         
         
     def generacjaTabeli(self):
 
         self.ustawRozmiar(self.iloscWierszy + 1, 
-                          self.iloscKolumn + 1 - len(self.listaNieDoWyswietlenia))
+                          self.iloscKolumn + 2 - len(self.listaNieDoWyswietlenia))
     
         self.setHorizontalHeaderLabels(self.nazwyKolumn)
         for indexWiersza in range(self.iloscWierszy):
             self.przesuniecie = 0;
             for indexKolumny in range(self.iloscKolumn):
                 if not (indexKolumny in self.listaNieDoWyswietlenia):
-                    noweZwierze = QtGui.QTableWidgetItem(str(self.daneZwierzeta[indexWiersza][indexKolumny]))
+                    noweZwierze = QtGui.QTableWidgetItem(str(self.daneTabeli[indexWiersza][indexKolumny]))
                     noweZwierze.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
                     self.setItem(indexWiersza, indexKolumny - self.przesuniecie, noweZwierze)
                 else:
                     self.przesuniecie = self.przesuniecie + 1
             self.przyciskEdycji(indexWiersza)
-
+            self.przyciskUsuniecia(indexWiersza)
+            
         self.przyciskDodaniaWiersza();
-           
+        
+        
+    def przyciskUsuniecia(self, indexWiersza):
+        przyciskDoEdycji = QtGui.QPushButton(self)
+        przyciskDoEdycji.setText('usun')
+        przyciskDoEdycji.kluczGlowny = self.daneTabeli[indexWiersza][0];
+        przyciskDoEdycji.clicked.connect(self.usunWiersz)
+        self.setCellWidget(indexWiersza, self.iloscKolumn - self.przesuniecie + 1, przyciskDoEdycji) 
                            
     def przyciskDodaniaWiersza(self):
         przyciskDodania = QtGui.QPushButton(self)
@@ -75,6 +84,12 @@ class TablicaPozostale(Tablica):
         przyciskDodania.clicked.connect(self.dodajWiersz)
         self.setCellWidget(self.iloscWierszy, self.iloscKolumn - self.przesuniecie, przyciskDodania)
             
+    def usunWiersz(self):
+        sender = self.sender()
+        self.kontroler.usunWiersz(self.nazwaTabeli,
+                                  sender.kluczGlowny)
+        self.odswierz()
+        
     def dodajWiersz(self):
         widget = self.item(self.iloscWierszy, 
                            self.iloscKolumn - self.przesuniecie - 1)
@@ -83,7 +98,7 @@ class TablicaPozostale(Tablica):
         else:
             self.kontroler.zapiszWBazie(self.nazwaTabeli, 
                                         self.opisZwierzeta, 
-                                        [widget.text()]);
+                                        [str(widget.text())]);
             self.odswierz()
             
 class TablicaPozostaleZagrody(Tablica):
@@ -102,6 +117,7 @@ class TablicaPozostaleZagrody(Tablica):
         self.resizeRowsToContents()
         
     def odswierz(self):
+        self.ustawRozmiar(0, 0)
         self.usunComboBox()
         self.pobierzDane()
         self.pobierzWymiary()
@@ -109,7 +125,7 @@ class TablicaPozostaleZagrody(Tablica):
     
         
     def pobierzDane(self):
-        self.daneZwierzeta = self.kontroler.laczTabele("ZAGRODY", 
+        self.daneTabeli = self.kontroler.laczTabele("ZAGRODY", 
                                                        "TYPY_ZAGROD", 
                                                        "TYPY_ZAGROD_Id",
                                                        "Id",
@@ -118,7 +134,7 @@ class TablicaPozostaleZagrody(Tablica):
     def przyciskEdycji(self, indexWiersza):
         przyciskDoEdycji = QtGui.QPushButton(self)
         przyciskDoEdycji.setText('edytuj')
-        przyciskDoEdycji.kluczGlowny = self.daneZwierzeta[indexWiersza][0];
+        przyciskDoEdycji.kluczGlowny = self.daneTabeli[indexWiersza][0];
         przyciskDoEdycji.clicked.connect(self.edytujKolumne)
         self.setCellWidget(indexWiersza, self.iloscKolumn - self.przesuniecie, przyciskDoEdycji)
         
@@ -138,22 +154,38 @@ class TablicaPozostaleZagrody(Tablica):
     def generacjaTabeli(self):
 
         self.ustawRozmiar(self.iloscWierszy + 1, 
-                          self.iloscKolumn + 1 - len(self.listaNieDoWyswietlenia))
+                          self.iloscKolumn + 2 - len(self.listaNieDoWyswietlenia))
     
         self.setHorizontalHeaderLabels(self.nazwyKolumn)
         for indexWiersza in range(self.iloscWierszy):
             self.przesuniecie = 0;
             for indexKolumny in range(self.iloscKolumn):
                 if not (indexKolumny in self.listaNieDoWyswietlenia):
-                    noweZwierze = QtGui.QTableWidgetItem(str(self.daneZwierzeta[indexWiersza][indexKolumny]))
+                    noweZwierze = QtGui.QTableWidgetItem(str(self.daneTabeli[indexWiersza][indexKolumny]))
                     noweZwierze.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
                     self.setItem(indexWiersza, indexKolumny - self.przesuniecie, noweZwierze)
                 else:
                     self.przesuniecie = self.przesuniecie + 1
+                    
+            self.przyciskUsuniecia(indexWiersza)
             self.przyciskEdycji(indexWiersza)
+            
         self.dodajComboBox()
         self.przyciskDodaniaWiersza();
            
+    def przyciskUsuniecia(self, indexWiersza):
+        przyciskDoEdycji = QtGui.QPushButton(self)
+        przyciskDoEdycji.setText('usun')
+        przyciskDoEdycji.kluczGlowny = self.daneTabeli[indexWiersza][0];
+        przyciskDoEdycji.clicked.connect(self.usunWiersz)
+        self.setCellWidget(indexWiersza, self.iloscKolumn - self.przesuniecie + 1, przyciskDoEdycji)
+         
+    def usunWiersz(self):
+        sender = self.sender()
+        self.kontroler.usunWiersz(self.nazwaTabeli,
+                                  sender.kluczGlowny)
+        self.odswierz()
+        
     def usunComboBox(self):
         self.removeCellWidget(self.iloscWierszy, 2)
         
@@ -185,13 +217,13 @@ class TablicaPozostaleZagrody(Tablica):
         else:
             
             self.listaDoZapisania = []
-            self.listaDoZapisania.append(self.listaWidgetow[0].text())
-            self.listaDoZapisania.append(self.listaWidgetow[1].text())
-            self.listaDoZapisania.append(self.listaWidgetow[2].currentText())
+            self.listaDoZapisania.append(str(self.listaWidgetow[0].text()))
+            self.listaDoZapisania.append(str(self.listaWidgetow[1].text()))
+            self.listaDoZapisania.append(str(self.listaWidgetow[2].currentText()))
             
-            self.listaDoZapisania[2] = self.kontroler.pobierzIdPoNazwie("TYPY_ZAGROD",
-                                                                        "Nazwa_Typ_Zagrody",
-                                                                        self.listaDoZapisania[2])
+            self.listaDoZapisania[2] = str(self.kontroler.pobierzIdPoNazwie("TYPY_ZAGROD",
+                                                                            "Nazwa_Typ_Zagrody",
+                                                                            self.listaDoZapisania[2]))
             
             self.kontroler.zapiszWBazie(self.nazwaTabeli, 
                                         self.opisZwierzeta, 

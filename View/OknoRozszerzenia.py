@@ -271,3 +271,132 @@ class OknoRozszerzeniaZwierzeta(OknoRozszerzenia):
             
 
         
+# MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMmmm
+
+
+class WeterynarzeComboBox(QtGui.QComboBox):
+    def __init__(self, parent = None):
+        super(WeterynarzeComboBox, self).__init__(parent)
+    def pobierzTekst(self):
+        return self.currentText()
+
+class WeterynarzeQLineEdit(QtGui.QLineEdit):
+    def __init__(self, tekst, parent = None):
+        super(WeterynarzeQLineEdit, self).__init__(tekst, parent)
+    def pobierzTekst(self):
+        return self.text()
+
+
+class OknoRozszerzeniaWeterynarze(OknoRozszerzenia):
+    def __init__(self, 
+                 kluczGlowny, 
+                 nazwaTabeli, 
+                 nazwaKolumn, 
+                 kontroler, 
+                 elementyDoWykluczenia, 
+                 opisTabeli,
+                 parent):
+        super(OknoRozszerzeniaWeterynarze, self).__init__(kluczGlowny, 
+                                                        nazwaTabeli, 
+                                                        nazwaKolumn, 
+                                                        kontroler, 
+                                                        elementyDoWykluczenia, 
+                                                        opisTabeli,
+                                                        parent)
+    def generujWidok(self):
+        
+        tabeleDoLaczenia = ["GATUNKI", "ZAGRODY"]
+        aktualnaWartosc = self.kontroler.laczIFiltruj("ZWIERZETA",
+                                                     [["GATUNKI", "GATUNEK_Id", "Id"], 
+                                                      ["ZAGRODY", "ZAGRODA_Id", "Id"]],
+                                                      self.kluczGlowny,
+                                                      "ZWIERZETA")
+        
+        self.listaWidgetow = []
+        self.listaWidgetow.append(WeterynarzeQLineEdit(str(aktualnaWartosc[0][1])))
+        self.listaWidgetow.append(WeterynarzeQLineEdit(str(aktualnaWartosc[0][2])))
+        self.listaWidgetow.append(WeterynarzeQLineEdit(str(aktualnaWartosc[0][3])))
+        self.listaWidgetow.append(WeterynarzeQLineEdit(str(aktualnaWartosc[0][4])))
+        
+        
+        
+        combo1= WeterynarzeComboBox()
+        combo1.addItem(str(aktualnaWartosc[0][8]))
+        
+        dane = self.kontroler.pobierzDane("GATUNKI")
+        
+        for indexDodawania in range(len(dane)):
+            if (str(dane[indexDodawania][1]) != str(aktualnaWartosc[0][8])):
+                combo1.addItem(str(dane[indexDodawania][1]))
+                
+        self.listaWidgetow.append(combo1) 
+        
+        combo2= WeterynarzeComboBox()
+        combo2.addItem(str(aktualnaWartosc[0][10]))
+        
+        dane = self.kontroler.pobierzDane("ZAGRODY")
+        
+        for indexDodawania in range(len(dane)):
+            if (str(dane[indexDodawania][1]) != str(aktualnaWartosc[0][10])):
+                combo2.addItem(str(dane[indexDodawania][1]))
+                
+        self.listaWidgetow.append(combo2) 
+
+        self.verticalLayout = QtGui.QVBoxLayout(self)
+
+        for indexKolumny in range(len(self.nazwaKolumn)):
+            self.verticalLayout.addWidget(QtGui.QLabel(str(self.nazwaKolumn[indexKolumny])))
+            self.verticalLayout.addWidget(self.listaWidgetow[indexKolumny])
+            
+            
+        self.dodajPozywienia()
+        self.dodajChoroby()
+        
+        self.przyciskZapisu = QtGui.QPushButton("zapisz")
+        self.verticalLayout.addWidget(self.przyciskZapisu)
+        self.przyciskZapisu.clicked.connect(self.zapisz)
+        
+    def dodajChoroby(self):
+        self.verticalLayout.addWidget(QtGui.QLabel("Choroby"))
+
+        self.tabelaChoroby = TablicaLaczaca(self.kontroler, 
+                                               [self.kluczGlowny, 0],
+                                               ["ZWIERZETA_Id", "CHOROBY_Id"],
+                                               ["LACZ_ZWIERZETA_CHOROBY", "ZWIERZETA", "CHOROBY"],
+                                               'Nazwa_Choroby')
+
+        
+        self.tabelaChoroby.wyswietlTablice();
+        self.verticalLayout.addWidget(self.tabelaChoroby)
+        
+    def dodajPozywienia(self):
+        self.verticalLayout.addWidget(QtGui.QLabel("Pozywienia"))
+
+        self.tabelaPozywienia = TablicaLaczaca(self.kontroler, 
+                                               [self.kluczGlowny, 0],
+                                               ["ZWIERZETA_Id", "POZYWIENIA_Id"],
+                                               ["LACZ_ZWIERZETA_POZYWIENIA", "ZWIERZETA", "POZYWIENIA"],
+                                               'Nazwa_Pozywienia')
+        
+        
+        self.tabelaPozywienia.wyswietlTablice();
+        self.verticalLayout.addWidget(self.tabelaPozywienia)
+        
+    def zapisz(self):
+        polaDoZapisania = []
+        for indexPol in range(len(self.listaWidgetow)):
+            polaDoZapisania.append(self.listaWidgetow[indexPol].pobierzTekst())
+            
+        polaDoZapisania[4] = self.kontroler.pobierzIdPoNazwie("GATUNKI",
+                                                              "Nazwa_Gatunku",
+                                                              polaDoZapisania[4])
+        
+        polaDoZapisania[5] = self.kontroler.pobierzIdPoNazwie("ZAGRODY",
+                                                              "Nazwa_Zagrody",
+                                                              polaDoZapisania[5])
+        
+        self.kontroler.modyfikujWartoscWTabeli(self.nazwaTabeli,
+                                               self.opisTabeli,
+                                               self.kluczGlowny, 
+                                               polaDoZapisania)
+        self.close()

@@ -42,8 +42,7 @@ class TablicaZwierzeta(Tablica):
         self.nazwyKolumn[5] = "Zagroda"
         
     def pobierzDane(self):
-        tabeleDoLaczenia = ["GATUNKI", "ZAGRODY"]
-        self.daneZwierzeta = self.kontroler.laczIPobierzWszystkie("ZWIERZETA",
+        self.daneTabeli = self.kontroler.laczIPobierzWszystkie("ZWIERZETA",
                                                                   [["GATUNKI", "GATUNEK_Id", "Id"], 
                                                                    ["ZAGRODY", "ZAGRODA_Id", "Id"]])
     def pobierzIndeksyDoWyswietlenia(self):
@@ -61,7 +60,7 @@ class TablicaZwierzeta(Tablica):
             wlasciwyIndexKolumny = 0;
             for indexKolumny in range(self.iloscKolumn):
                 if indexKolumny in self.listaDoWyswietlenia:
-                    noweZwierze = QtGui.QTableWidgetItem(str(self.daneZwierzeta[indexWiersza][indexKolumny]))
+                    noweZwierze = QtGui.QTableWidgetItem(str(self.daneTabeli[indexWiersza][indexKolumny]))
                     self.setItem(indexWiersza, wlasciwyIndexKolumny, noweZwierze)
                     wlasciwyIndexKolumny = wlasciwyIndexKolumny + 1
                 
@@ -89,14 +88,14 @@ class TablicaZwierzeta(Tablica):
     def dodajPrzyciskUsuniecia(self, indexWiersza):
             przyciskDoEdycji = QtGui.QPushButton(self)
             przyciskDoEdycji.setText('usun')
-            przyciskDoEdycji.kluczGlowny = self.daneZwierzeta[indexWiersza][0];
+            przyciskDoEdycji.kluczGlowny = self.daneTabeli[indexWiersza][0];
             przyciskDoEdycji.clicked.connect(self.usunWiersz)
             self.setCellWidget(indexWiersza, len(self.listaDoWyswietlenia) + 1, przyciskDoEdycji)
             
     def dodajPrzyciskEdycji(self, indexWiersza):
         przyciskDoEdycji = QtGui.QPushButton(self)
         przyciskDoEdycji.setText('edytuj')
-        przyciskDoEdycji.kluczGlowny = self.daneZwierzeta[indexWiersza][0];
+        przyciskDoEdycji.kluczGlowny = self.daneTabeli[indexWiersza][0];
         przyciskDoEdycji.clicked.connect(self.edytujWiersz)
         self.setCellWidget(indexWiersza, len(self.listaDoWyswietlenia), przyciskDoEdycji)
             

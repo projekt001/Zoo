@@ -50,7 +50,7 @@ class TabeleWBazie:
                               Nazwa_Zagrody CHAR(20),
                               Powierzchnia INT NOT NULL,
                               TYPY_ZAGROD_Id INT NOT NULL,
-                              FOREIGN KEY (TYPY_ZAGROD_Id) REFERENCES TYPY_ZAGROD(Id))"""
+                              FOREIGN KEY (TYPY_ZAGROD_Id) REFERENCES TYPY_ZAGROD(Id)) """
 
         try:
             self.cursor.execute(sqlStworzZagrody)   
