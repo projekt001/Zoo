@@ -16,7 +16,10 @@ class Kontroler:
         
     
         for indexDanych in range(len(daneDoWstawienia)):
-            komenda = komenda + "'" + str(daneDoWstawienia[indexDanych]) + "', "
+            if(daneDoWstawienia[indexDanych].isdigit()):
+                komenda = komenda + "" + str(daneDoWstawienia[indexDanych]) + ", "          
+            else:                   
+                komenda = komenda + "'" + str(daneDoWstawienia[indexDanych]) + "', "
         komenda = komenda[0:-2] + ")"
         
         print "zapiszWBazie" + komenda
@@ -98,24 +101,59 @@ class Kontroler:
         return daneZwierzeta
     
     def pobierzJedenWiersz(self, nazwaTabeli, kluczGlowny):
-        print 'Jeden Wiersz !'
         komenda = "SELECT * FROM " +  nazwaTabeli + " WHERE Id =" + str(kluczGlowny)
         self.kursorDoBazy.execute(komenda)
         dane = self.kursorDoBazy.fetchone()
                 
         return dane
     
+    def pobierzDaneZDanymKluczem(self, nazwaTabeli, kluczGlowny):
+        komenda = "SELECT * FROM " +  nazwaTabeli + " WHERE Id =" + str(kluczGlowny)
+        self.kursorDoBazy.execute(komenda)
+        dane = self.kursorDoBazy.fetchall()
+                
+        return dane
     
-    def laczTabeleWenetrznieIPobierzWiersz(self, tabelaGlowna, daneDoLaczeniaTabel):
+    def laczIFiltruj(self, 
+                     tabelaGlowna, 
+                     daneDoLaczeniaTabel, 
+                     kluczGlowny,
+                     whereStatement,
+                     nazwaKluczaTabelaGlowna = "Id"):
 
-        komenda  = "SELECT * FROM ZWIERZETA"
+        komenda  = "SELECT * FROM " + tabelaGlowna
+        for indexLaczenia in range(len(daneDoLaczeniaTabel)):
+             komenda = komenda + " JOIN " + daneDoLaczeniaTabel[indexLaczenia][0] + " ON " \
+                       + tabelaGlowna + "." + daneDoLaczeniaTabel[indexLaczenia][1] + "=" + \
+                       daneDoLaczeniaTabel[indexLaczenia][0] + "." + daneDoLaczeniaTabel[indexLaczenia][2]
+        komenda = komenda +" WHERE " + whereStatement + "." + nazwaKluczaTabelaGlowna +" =" + str(kluczGlowny)
+        
+        
+        self.kursorDoBazy.execute(komenda)
+        return self.kursorDoBazy.fetchall()
+    
+    def laczIPobierzWszystkie(self, 
+                              tabelaGlowna, 
+                              daneDoLaczeniaTabel):
+
+        komenda  = "SELECT * FROM " + tabelaGlowna
         for indexLaczenia in range(len(daneDoLaczeniaTabel)):
              komenda = komenda + " JOIN " + daneDoLaczeniaTabel[indexLaczenia][0] + " ON " \
                        + tabelaGlowna + "." + daneDoLaczeniaTabel[indexLaczenia][1] + "=" + \
                        daneDoLaczeniaTabel[indexLaczenia][0] + "." + daneDoLaczeniaTabel[indexLaczenia][2]
         
         self.kursorDoBazy.execute(komenda)
-        return self.kursorDoBazy.fetchone()
+        return self.kursorDoBazy.fetchall()
+
+
+    def usunWiersz(self, 
+                   nazwaTabeli,
+                   kluczGlowny):
+        komenda = " DELETE FROM " + nazwaTabeli + " WHERE Id =" + str(kluczGlowny)
+        print komenda
+        self.kursorDoBazy.execute(komenda)
+        
+        
     
     def laczTabeleIPobierzWiersz(self, 
                                  tabelaGlowna, 
@@ -172,7 +210,21 @@ class Kontroler:
             self.kursorDoBazy.execute("""INSERT INTO ZWIERZETA (Nazwa_Zwierzecia, Wzrost, Waga, Wiek, GATUNEK_Id, ZAGRODA_Id) 
                                                                VALUES('Tygrys', 90, 10, 20, 2, 2)""")
             
-
+            self.kursorDoBazy.execute("""INSERT INTO LACZ_ZWIERZETA_POZYWIENIA (ZWIERZETA_Id, POZYWIENIA_Id) 
+                                                               VALUES(1, 1)""")
+            
+            self.kursorDoBazy.execute("""INSERT INTO LACZ_ZWIERZETA_POZYWIENIA (ZWIERZETA_Id, POZYWIENIA_Id) 
+                                                               VALUES(1, 2)""")
+            
+            self.kursorDoBazy.execute("""INSERT INTO LACZ_ZWIERZETA_POZYWIENIA (ZWIERZETA_Id, POZYWIENIA_Id) 
+                                                               VALUES(1, 3)""")
+            
+            self.kursorDoBazy.execute("""INSERT INTO LACZ_ZWIERZETA_POZYWIENIA (ZWIERZETA_Id, POZYWIENIA_Id) 
+                                                               VALUES(2, 2)""")
+            
+            self.kursorDoBazy.execute("""INSERT INTO LACZ_ZWIERZETA_POZYWIENIA (ZWIERZETA_Id, POZYWIENIA_Id) 
+                                                               VALUES(3, 3)""")
+            
         except Warning, e:
             print str(e)
             

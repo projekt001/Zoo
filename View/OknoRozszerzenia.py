@@ -1,5 +1,6 @@
 from PyQt4 import QtCore
 from PyQt4 import QtGui
+from TablicaLaczaca import TablicaLaczaca
 
 class OknoRozszerzenia(QtGui.QDialog):
     def __init__(self, 
@@ -173,44 +174,59 @@ class OknoRozszerzeniaZwierzeta(OknoRozszerzenia):
     def generujWidok(self):
         
         tabeleDoLaczenia = ["GATUNKI", "ZAGRODY"]
-        aktualnaWartosc = self.kontroler.laczTabeleWenetrznieIPobierzWiersz("ZWIERZETA",
-                                                                            [["GATUNKI", "GATUNEK_Id", "Id"], ["ZAGRODY", "ZAGRODA_Id", "Id"]])
+        aktualnaWartosc = self.kontroler.laczIFiltruj("ZWIERZETA",
+                                                     [["GATUNKI", "GATUNEK_Id", "Id"], 
+                                                      ["ZAGRODY", "ZAGRODA_Id", "Id"]],
+                                                      self.kluczGlowny,
+                                                      "ZWIERZETA")
+        print "aktualnaWartosc" + str(aktualnaWartosc)
         self.listaWidgetow = []
-        self.listaWidgetow.append(ZwierzetaQLineEdit(str(aktualnaWartosc[1])))
-        self.listaWidgetow.append(ZwierzetaQLineEdit(str(aktualnaWartosc[2])))
-        self.listaWidgetow.append(ZwierzetaQLineEdit(str(aktualnaWartosc[3])))
-        self.listaWidgetow.append(ZwierzetaQLineEdit(str(aktualnaWartosc[4])))
+        self.listaWidgetow.append(ZwierzetaQLineEdit(str(aktualnaWartosc[0][1])))
+        self.listaWidgetow.append(ZwierzetaQLineEdit(str(aktualnaWartosc[0][2])))
+        self.listaWidgetow.append(ZwierzetaQLineEdit(str(aktualnaWartosc[0][3])))
+        self.listaWidgetow.append(ZwierzetaQLineEdit(str(aktualnaWartosc[0][4])))
         
         
         
         combo1= ZwierzetaComboBox()
-        combo1.addItem(str(aktualnaWartosc[8]))
+        combo1.addItem(str(aktualnaWartosc[0][8]))
         
         dane = self.kontroler.pobierzDane("GATUNKI")
         
         for indexDodawania in range(len(dane)):
-            if (str(dane[indexDodawania][1]) != str(aktualnaWartosc[8])):
+            if (str(dane[indexDodawania][1]) != str(aktualnaWartosc[0][8])):
                 combo1.addItem(str(dane[indexDodawania][1]))
                 
         self.listaWidgetow.append(combo1) 
         
         combo2= ZwierzetaComboBox()
-        combo2.addItem(str(aktualnaWartosc[10]))
+        combo2.addItem(str(aktualnaWartosc[0][10]))
         
         dane = self.kontroler.pobierzDane("ZAGRODY")
         
         for indexDodawania in range(len(dane)):
-            if (str(dane[indexDodawania][1]) != str(aktualnaWartosc[10])):
+            if (str(dane[indexDodawania][1]) != str(aktualnaWartosc[0][10])):
                 combo2.addItem(str(dane[indexDodawania][1]))
                 
         self.listaWidgetow.append(combo2) 
 
         self.verticalLayout = QtGui.QVBoxLayout(self)
+
         for indexKolumny in range(len(self.nazwaKolumn)):
             self.verticalLayout.addWidget(QtGui.QLabel(str(self.nazwaKolumn[indexKolumny])))
             self.verticalLayout.addWidget(self.listaWidgetow[indexKolumny])
             
             
+        self.tabelaPozywienia = TablicaLaczaca(self.kontroler, 
+                                               self.kluczGlowny, 
+                                               "POZYWIENIA_Id",
+                                               "LACZ_ZWIERZETA_POZYWIENIA",
+                                               "POZYWIENIA",
+                                               "ZWIERZETA")
+        
+        self.tabelaPozywienia.wyswietlTablice();
+        self.verticalLayout.addWidget(self.tabelaPozywienia)
+        
         self.przyciskZapisu = QtGui.QPushButton("zapisz")
         self.verticalLayout.addWidget(self.przyciskZapisu)
         self.przyciskZapisu.clicked.connect(self.zapisz)
