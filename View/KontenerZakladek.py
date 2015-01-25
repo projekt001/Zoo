@@ -8,7 +8,7 @@ class KontenerZakladek(QtGui.QTabWidget):
     def __init__(self, kontroler):
         super(KontenerZakladek, self).__init__()
         self.dodajZakladki(kontroler)
-
+    
     def dodajZakladki(self, kontroler):
         self.zakladkaZwierzat    = Zwierzeta(self, kontroler)    
         self.zakladkaWeterynarze = Weterynarze(self, kontroler)

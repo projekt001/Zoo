@@ -11,8 +11,11 @@ class GlowneOkno(QtGui.QApplication):
         super(GlowneOkno, self).__init__(sys.argv)
         self.setApplicationName('Aplikacja Zarządcy Zoo')
         self.wyswietlZakladki(kontroler);
-
+        self.show()
+        
     def wyswietlZakladki(self, kontroler):
     	kontenerZakladek = KontenerZakladek(kontroler)
+        screen = QtGui.QDesktopWidget().screenGeometry()
+        kontenerZakladek.resize(screen.width(), screen.height())
     	kontenerZakladek.show()
         sys.exit(self.exec_())
