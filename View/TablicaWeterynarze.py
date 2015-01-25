@@ -22,14 +22,14 @@ class WeterynarzeQTableWidget(QtGui.QTableWidgetItem):
         return self.text()
         
 class TablicaWeterynarze(Tablica):
-    def __init__(self, kontroler, nazwaTabeli, parent):
+    def __init__(self, kontenerZakladek, kontroler, nazwaTabeli, parent):
         super(TablicaWeterynarze, self).__init__(kontroler, parent)
         self.pobierzInformacjeOTabeli(nazwaTabeli)
         self.pobierzDaneDoWyswietlenia(["Id"])
         self.przystosujNazwyKolumn()
         self.pobierzDane()
         self.pobierzIndeksyDoWyswietlenia()
-        
+        self.kontenerZakladek = kontenerZakladek
         if self.pobierzWymiary():
             self.generacjaTabeli()
             
@@ -122,13 +122,13 @@ class TablicaWeterynarze(Tablica):
             self.kontroler.zapiszWBazie(self.nazwaTabeli, 
                                         self.opisTabeli, 
                                         self.listaDoZapisania);
-            self.odswierz()
+            self.kontenerZakladek.odswierz()
             
     def usunWiersz(self):
         sender = self.sender()
         self.kontroler.usunWiersz(self.nazwaTabeli,
                                   sender.kluczGlowny)
-        self.odswierz()
+        self.kontenerZakladek.odswierz()
         
     def edytujWiersz(self):
         sender = self.sender()

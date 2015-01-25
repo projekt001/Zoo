@@ -10,10 +10,15 @@ class KontenerZakladek(QtGui.QTabWidget):
         self.dodajZakladki(kontroler)
 
     def dodajZakladki(self, kontroler):
-        zakladkaZwierzat    = Zwierzeta(kontroler)    
-        zakladkaWeterynarze = Weterynarze(kontroler)
-        zakladkaPozostale   = Pozostale(kontroler)
+        self.zakladkaZwierzat    = Zwierzeta(self, kontroler)    
+        self.zakladkaWeterynarze = Weterynarze(self, kontroler)
+        self.zakladkaPozostale   = Pozostale(self, kontroler)
 
-        self.addTab(zakladkaZwierzat,   "Zwierzeta")
-        self.addTab(zakladkaWeterynarze,"Weterynarze")
-        self.addTab(zakladkaPozostale,  "Pozostale")
+        self.addTab(self.zakladkaZwierzat,   "Zwierzeta")
+        self.addTab(self.zakladkaWeterynarze,"Weterynarze")
+        self.addTab(self.zakladkaPozostale,  "Pozostale")
+        
+    def odswierz(self):
+        self.zakladkaZwierzat.odswierz()
+        self.zakladkaWeterynarze.odswierz()
+        self.zakladkaPozostale.odswierz()

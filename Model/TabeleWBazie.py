@@ -103,19 +103,6 @@ class TabeleWBazie:
         except Warning, e:
             print str(e)
             
-    def stworzTabeleLaczChorZwierz(self):
-        sqlLaczChorobyZwierz = """CREATE TABLE IF NOT EXISTS LACZ_ZWIERZETA_CHOROBY (
-                                  Id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                                  ZWIERZETA_Id INT NOT NULL,
-                                  CHOROBY_Id INT NOT NULL,
-                                  FOREIGN KEY (ZWIERZETA_Id) REFERENCES ZWIERZETA (Id),
-                                  FOREIGN KEY (CHOROBY_Id) REFERENCES CHOROBY (Id))"""
-        
-            
-        try:
-            self.cursor.execute(sqlLaczChorobyZwierz)  
-        except Warning, e:
-            print str(e)
             
     def stworzTabeleSpecjalizacje(self):
         sqlSpecjalizacje = """CREATE TABLE IF NOT EXISTS SPECJALIZACJE (

@@ -6,9 +6,10 @@ from Tablica import Tablica
 
 
 class TablicaPozostale(Tablica):
-    def __init__(self, kontroler, nazwaTabeli, parent):
+    def __init__(self, kontenerZakladek, kontroler, nazwaTabeli, parent):
         super(TablicaPozostale, self).__init__(kontroler, parent)
         
+        self.kontenerZakladek = kontenerZakladek
         self.pobierzInformacjeOTabeli(nazwaTabeli)
         self.pobierzDaneDoWyswietlenia(["Id"])
         self.pobierzDane()
@@ -18,12 +19,6 @@ class TablicaPozostale(Tablica):
 
         self.resizeColumnsToContents()
         self.resizeRowsToContents()
-        
-    def odswierz(self):
-        self.ustawRozmiar(0, 0)
-        self.pobierzDane()
-        self.pobierzWymiary()
-        self.generacjaTabeli();
         
     def przyciskEdycji(self, indexWiersza):
         przyciskDoEdycji = QtGui.QPushButton(self)
@@ -91,7 +86,13 @@ class TablicaPozostale(Tablica):
         sender = self.sender()
         self.kontroler.usunWiersz(self.nazwaTabeli,
                                   sender.kluczGlowny)
-        self.odswierz()
+        self.kontenerZakladek.odswierz()
+        
+    def odswierz(self):
+        self.ustawRozmiar(0, 0)
+        self.pobierzDane()
+        self.pobierzWymiary()
+        self.generacjaTabeli();
         
     def dodajWiersz(self):
         widget = self.item(self.iloscWierszy, 
@@ -102,12 +103,14 @@ class TablicaPozostale(Tablica):
             self.kontroler.zapiszWBazie(self.nazwaTabeli, 
                                         self.opisTabeli, 
                                         [str(widget.text())]);
-            self.odswierz()
+            self.kontenerZakladek.odswierz()
+            
             
 class TablicaPozostaleZagrody(Tablica):
-    def __init__(self, kontroler, nazwaTabeli, parent):
+    def __init__(self, kontenerZakladek, kontroler, nazwaTabeli, parent):
         super(TablicaPozostaleZagrody, self).__init__(kontroler, parent)
-            
+        
+        self.kontenerZakladek = kontenerZakladek
         self.pobierzInformacjeOTabeli(nazwaTabeli)
         self.pobierzDaneDoWyswietlenia(["Id", "TYPY_ZAGROD_Id"])
         

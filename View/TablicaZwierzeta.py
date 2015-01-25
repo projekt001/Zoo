@@ -22,9 +22,10 @@ class ZwierzetaQTableWidget(QtGui.QTableWidgetItem):
         return self.text()
         
 class TablicaZwierzeta(Tablica):
-    def __init__(self, kontroler, nazwaTabeli, parent):
+    def __init__(self, kontenerZakladek, kontroler, nazwaTabeli, parent):
         super(TablicaZwierzeta, self).__init__(kontroler, parent)
         
+        self.kontenerZakladek = kontenerZakladek
         self.pobierzInformacjeOTabeli(nazwaTabeli)
         self.pobierzDaneDoWyswietlenia(["Id"])
         self.przystosujNazwyKolumn()
@@ -137,13 +138,13 @@ class TablicaZwierzeta(Tablica):
             self.kontroler.zapiszWBazie(self.nazwaTabeli, 
                                         self.opisTabeli, 
                                         self.listaDoZapisania);
-            self.odswierz()
+            self.kontenerZakladek.odswierz()
             
     def usunWiersz(self):
         sender = self.sender()
         self.kontroler.usunWiersz(self.nazwaTabeli,
                                   sender.kluczGlowny)
-        self.odswierz()
+        self.kontenerZakladek.odswierz()
         
     def edytujWiersz(self):
         sender = self.sender()
@@ -155,11 +156,6 @@ class TablicaZwierzeta(Tablica):
                                                            self.opisTabeli,
                                                            self);
         self.dialogTextBrowser.generujWidok()
-        self.dialogTextBrowser.exec_()
-        
-    def on_pushButton_clicked(self):
-        sender = self.sender()
-        self.dialogTextBrowser = OknoRozszerzenia();
         self.dialogTextBrowser.exec_()
         
     def odswierz(self):

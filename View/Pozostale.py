@@ -5,7 +5,7 @@ from TablicaPozostale import TablicaPozostale
 from TablicaPozostale import TablicaPozostaleZagrody
 
 class Pozostale(QtGui.QWidget):
-    def __init__(self, kontroler):
+    def __init__(self, kontenerZakladek, kontroler):
         super(Pozostale, self).__init__()
 
         hBoxlayout1  = QtGui.QHBoxLayout()
@@ -13,15 +13,18 @@ class Pozostale(QtGui.QWidget):
         
         vBoxlayout1  = QtGui.QVBoxLayout()
         vBoxlayout1.addWidget(QtGui.QLabel("POZYWIENIA"))
-        vBoxlayout1.addWidget(TablicaPozostale(kontroler, "POZYWIENIA", self))
+        self.tablicaPozywienia = TablicaPozostale(kontenerZakladek, kontroler, "POZYWIENIA", self)
+        vBoxlayout1.addWidget(self.tablicaPozywienia)
         
         vBoxlayout2  = QtGui.QVBoxLayout()
         vBoxlayout2.addWidget(QtGui.QLabel("CHOROBY"))
-        vBoxlayout2.addWidget(TablicaPozostale(kontroler, "CHOROBY", self))
+        self.tablicaChoroby = TablicaPozostale(kontenerZakladek, kontroler, "CHOROBY", self)
+        vBoxlayout2.addWidget(self.tablicaChoroby)
         
         vBoxlayout3  = QtGui.QVBoxLayout()
         vBoxlayout3.addWidget(QtGui.QLabel("GATUNKI"))
-        vBoxlayout3.addWidget(TablicaPozostale(kontroler, "GATUNKI", self))
+        self.tablicaGatunki = TablicaPozostale(kontenerZakladek, kontroler, "GATUNKI", self)
+        vBoxlayout3.addWidget(self.tablicaGatunki)
         
         hBoxlayout1.addLayout(vBoxlayout1)
         hBoxlayout1.addLayout(vBoxlayout2)
@@ -29,15 +32,18 @@ class Pozostale(QtGui.QWidget):
         
         vBoxlayout4  = QtGui.QVBoxLayout()
         vBoxlayout4.addWidget(QtGui.QLabel("SPECJALIZACJE"))
-        vBoxlayout4.addWidget(TablicaPozostale(kontroler, "SPECJALIZACJE", self))
+        self.tablicaSpecjalizacje = TablicaPozostale(kontenerZakladek, kontroler, "SPECJALIZACJE", self)
+        vBoxlayout4.addWidget(self.tablicaSpecjalizacje)
         
         vBoxlayout5  = QtGui.QVBoxLayout()
         vBoxlayout5.addWidget(QtGui.QLabel("TYPY ZAGROD"))
-        vBoxlayout5.addWidget(TablicaPozostale(kontroler, "TYPY_ZAGROD", self))
+        self.tablicaTypyZagrod = TablicaPozostale(kontenerZakladek, kontroler, "TYPY_ZAGROD", self)
+        vBoxlayout5.addWidget(self.tablicaTypyZagrod)
 
         vBoxlayout6  = QtGui.QVBoxLayout()
         vBoxlayout6.addWidget(QtGui.QLabel("ZAGRODY"))
-        vBoxlayout6.addWidget(TablicaPozostaleZagrody(kontroler, "ZAGRODY", self))
+        self.tablicaPozostaleZagrody = TablicaPozostaleZagrody(kontenerZakladek, kontroler, "ZAGRODY", self)
+        vBoxlayout6.addWidget(self.tablicaPozostaleZagrody)
         
         hBoxlayout2.addLayout(vBoxlayout4)
         hBoxlayout2.addLayout(vBoxlayout5)
@@ -49,3 +55,11 @@ class Pozostale(QtGui.QWidget):
         vBoxlayout.addLayout(hBoxlayout2)
 
         self.setLayout(vBoxlayout)
+        
+    def odswierz(self):
+        self.tablicaPozywienia.odswierz()
+        self.tablicaChoroby.odswierz()
+        self.tablicaGatunki.odswierz()
+        self.tablicaSpecjalizacje.odswierz()
+        self.tablicaTypyZagrod.odswierz()
+        self.tablicaPozostaleZagrody.odswierz()
