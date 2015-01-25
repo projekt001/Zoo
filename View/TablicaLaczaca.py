@@ -90,7 +90,8 @@ class TablicaLaczaca(QtGui.QTableWidget):
         self.listaDoZapisania[1] = str(self.kontroler.pobierzIdPoNazwie(self.nazwyTabeli[2],
                                                                         self.nazwa,
                                                                         self.listaDoZapisania[1]))
-
+        
+        
         self.kontroler.zapiszWBazie(self.nazwyTabeli[0], 
                                     self.opisZwierzeta, 
                                     self.listaDoZapisania);

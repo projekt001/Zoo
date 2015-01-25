@@ -55,7 +55,10 @@ class TablicaPozostale(Tablica):
         self.ustawRozmiar(self.iloscWierszy + 1, 
                           self.iloscKolumn + 2 - len(self.listaNieDoWyswietlenia))
     
+        self.nazwyKolumnDoWyswietlenia = self.nazwyKolumn
+        self.nazwyKolumnDoWyswietlenia[0] = "Nazwa" 
         self.setHorizontalHeaderLabels(self.nazwyKolumn)
+        
         for indexWiersza in range(self.iloscWierszy):
             self.przesuniecie = 0;
             for indexKolumny in range(self.iloscKolumn):

@@ -347,7 +347,7 @@ class OknoRozszerzeniaWeterynarze(OknoRozszerzenia):
         self.tabelaZagrody= TablicaLaczaca(self.kontroler, 
                                             [self.kluczGlowny, 0],
                                             ["WETERYNARZE_Id", "ZAGRODY_Id"],
-                                            ["LACZ_ZAGRODY_WETERYNARZE", "WETERYNARZE", "ZAGRODY"],
+                                            ["LACZ_WETERYNARZE_ZAGRODY", "WETERYNARZE", "ZAGRODY"],
                                             'Nazwa_Zagrody')
         
         self.tabelaZagrody.wyswietlTablice();
@@ -363,6 +363,9 @@ class OknoRozszerzeniaWeterynarze(OknoRozszerzenia):
                                                               "Nazwa_Specjalizacji",
                                                               polaDoZapisania[3])
         
+        print "******* " + str(polaDoZapisania)
+        print "******* " + str(self.opisTabeli)
+        print "*******"  + str(self.kluczGlowny)
 
         self.kontroler.modyfikujWartoscWTabeli(self.nazwaTabeli,
                                                self.opisTabeli,

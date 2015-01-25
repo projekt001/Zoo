@@ -82,11 +82,11 @@ class TablicaWeterynarze(Tablica):
         self.setCellWidget(self.iloscWierszy, indexKolumny, comboBox)
         
     def dodajPrzyciskUsuniecia(self, indexWiersza):
-            przyciskDoEdycji = QtGui.QPushButton(self)
-            przyciskDoEdycji.setText('usun')
-            przyciskDoEdycji.kluczGlowny = self.daneTabeli[indexWiersza][0];
-            przyciskDoEdycji.clicked.connect(self.usunWiersz)
-            self.setCellWidget(indexWiersza, len(self.listaDoWyswietlenia) + 1, przyciskDoEdycji)
+        przyciskDoEdycji = QtGui.QPushButton(self)
+        przyciskDoEdycji.setText('usun')
+        przyciskDoEdycji.kluczGlowny = self.daneTabeli[indexWiersza][0];
+        przyciskDoEdycji.clicked.connect(self.usunWiersz)
+        self.setCellWidget(indexWiersza, len(self.listaDoWyswietlenia) + 1, przyciskDoEdycji)
             
     def dodajPrzyciskEdycji(self, indexWiersza):
         przyciskDoEdycji = QtGui.QPushButton(self)
@@ -100,17 +100,12 @@ class TablicaWeterynarze(Tablica):
         self.listaWidgetow.append(self.item(self.iloscWierszy, 0))
         self.listaWidgetow.append(self.item(self.iloscWierszy, 1))
         self.listaWidgetow.append(self.item(self.iloscWierszy, 2))
-        self.listaWidgetow.append(self.item(self.iloscWierszy, 3))
-        
-        self.listaWidgetow.append(self.cellWidget(self.iloscWierszy, 4))
-        self.listaWidgetow.append(self.cellWidget(self.iloscWierszy, 5))
+        self.listaWidgetow.append(self.cellWidget(self.iloscWierszy, 3))
         
         if( (self.listaWidgetow[0] == None) or 
             (self.listaWidgetow[1] == None) or
             (self.listaWidgetow[2] == None) or
-            (self.listaWidgetow[3] == None) or
-            (self.listaWidgetow[4] == None) or
-            (self.listaWidgetow[5] == None) ):
+            (self.listaWidgetow[3] == None) ):
             print " pole jest puste"
         else:
             
@@ -118,17 +113,11 @@ class TablicaWeterynarze(Tablica):
             self.listaDoZapisania.append(str(self.listaWidgetow[0].text()))
             self.listaDoZapisania.append(str(self.listaWidgetow[1].text()))
             self.listaDoZapisania.append(str(self.listaWidgetow[2].text()))
-            self.listaDoZapisania.append(str(self.listaWidgetow[3].text()))
-            self.listaDoZapisania.append(str(self.listaWidgetow[4].currentText()))
-            self.listaDoZapisania.append(str(self.listaWidgetow[5].currentText()))
+            self.listaDoZapisania.append(str(self.listaWidgetow[3].currentText()))
             
-            self.listaDoZapisania[4] = str(self.kontroler.pobierzIdPoNazwie("GATUNKI",
-                                                                            "Nazwa_Gatunku",
-                                                                            self.listaDoZapisania[4]))
-            
-            self.listaDoZapisania[5] = str(self.kontroler.pobierzIdPoNazwie("ZAGRODY",
-                                                                            "Nazwa_Zagrody",
-                                                                             self.listaDoZapisania[5]))
+            self.listaDoZapisania[3] = str(self.kontroler.pobierzIdPoNazwie("SPECJALIZACJE",
+                                                                            "Nazwa_Specjalizacji",
+                                                                            self.listaDoZapisania[3]))
             
             self.kontroler.zapiszWBazie(self.nazwaTabeli, 
                                         self.opisTabeli, 
@@ -144,12 +133,12 @@ class TablicaWeterynarze(Tablica):
     def edytujWiersz(self):
         sender = self.sender()
         self.dialogTextBrowser = OknoRozszerzeniaWeterynarze(sender.kluczGlowny, 
-                                                           self.nazwaTabeli,
-                                                           self.nazwyKolumn,
-                                                           self.kontroler,
-                                                           self.elementyDoWykluczenia,
-                                                           self.opisTabeli,
-                                                           self);
+                                                             self.nazwaTabeli,
+                                                             self.nazwyKolumn,
+                                                             self.kontroler,
+                                                             self.elementyDoWykluczenia,
+                                                             self.opisTabeli,
+                                                             self);
         self.dialogTextBrowser.generujWidok()
         self.dialogTextBrowser.exec_()
         

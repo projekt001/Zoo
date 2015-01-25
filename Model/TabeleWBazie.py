@@ -145,12 +145,12 @@ class TabeleWBazie:
             
     def stworzTabeleLaczZagrodyWeterynarze(self):
         
-        sqlLaczWetZag = """CREATE TABLE IF NOT EXISTS LACZ_ZAGRODY_WETERYNARZE (
+        sqlLaczWetZag = """CREATE TABLE IF NOT EXISTS LACZ_WETERYNARZE_ZAGRODY(
                            Id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                           ZAGRODY_Id INT NOT NULL,
                            WETERYNARZE_Id INT NOT NULL,
-                           FOREIGN KEY (ZAGRODY_Id) REFERENCES ZAGRODY (Id),
-                           FOREIGN KEY (WETERYNARZE_Id) REFERENCES WETERYNARZE (Id))"""
+                           ZAGRODY_Id INT NOT NULL,
+                           FOREIGN KEY (WETERYNARZE_Id) REFERENCES WETERYNARZE (Id),
+                           FOREIGN KEY (ZAGRODY_Id) REFERENCES ZAGRODY (Id))"""
         try:
             self.cursor.execute(sqlLaczWetZag)  
         except Warning, e:
@@ -177,7 +177,7 @@ class TabeleWBazie:
     def usunJesliIstnieja(self):
 
         try:
-            self.cursor.execute("DROP TABLE IF EXISTS LACZ_ZAGRODY_WETERYNARZE")
+            self.cursor.execute("DROP TABLE IF EXISTS LACZ_WETERYNARZE_ZAGRODY")
         except Warning, e:
             print str(e)
             
