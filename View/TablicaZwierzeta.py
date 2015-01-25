@@ -54,7 +54,9 @@ class TablicaZwierzeta(Tablica):
         self.ustawRozmiar(self.iloscWierszy + 1, 
                           len(self.listaDoWyswietlenia) + 2)
     
-        self.setHorizontalHeaderLabels(self.nazwyKolumn)
+        self.nazwyKolumnDoWyswietlenia = self.nazwyKolumn
+        self.nazwyKolumnDoWyswietlenia[0] = "Nazwa"
+        self.setHorizontalHeaderLabels(self.nazwyKolumnDoWyswietlenia)
 
         for indexWiersza in range(self.iloscWierszy):
             przesuniecie = 0;

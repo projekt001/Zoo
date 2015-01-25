@@ -21,8 +21,6 @@ class Kontroler:
                 komenda = komenda + "'" + str(daneDoWstawienia[indexDanych]) + "', "
         komenda = komenda[0:-2] + ")"
         
-        print "zapiszWBazie" + komenda
-        
         try:
             self.kursorDoBazy.execute(komenda)
         except Warning, e:
@@ -33,13 +31,9 @@ class Kontroler:
                           nazwaKolumny,
                           wartoscPola):
         
-        print nazwaTabeli
-        print nazwaKolumny
-        print wartoscPola
         komenda = "SELECT * FROM " +  nazwaTabeli + \
                   " WHERE " + nazwaKolumny + " = '"+ str(wartoscPola) + "'"
                   
-        print komenda
         
         self.kursorDoBazy.execute(komenda)
         dane = self.kursorDoBazy.fetchall()
@@ -52,7 +46,6 @@ class Kontroler:
                                 kluczGlowny, 
                                 poleDoZapisania):
 
-        print nazwaKolumn
         komenda = "UPDATE " + str(nazwaTabeli) + " SET " 
         
         iloscKolumn = len(poleDoZapisania)
@@ -66,12 +59,10 @@ class Kontroler:
                 poleDoZapisaniaLista.append("'" + chwilowaZmienna + "'")
                 
         for indexKolumny in range(iloscKolumn):
-            print str(nazwaKolumn[indexKolumny + 1][0])
             komenda = komenda + str(nazwaKolumn[indexKolumny + 1][0]) + " = " + str(poleDoZapisaniaLista[indexKolumny]) + ", "
         
         komenda = komenda[0:-2] + " WHERE Id = "+ str(kluczGlowny)
         
-        print komenda
 
         self.kursorDoBazy.execute(komenda)
 
@@ -130,7 +121,6 @@ class Kontroler:
                        daneDoLaczeniaTabel[indexLaczenia][0] + "." + daneDoLaczeniaTabel[indexLaczenia][2]
         komenda = komenda +" WHERE " + whereStatement + "." + nazwaKluczaTabelaGlowna +" =" + str(kluczGlowny)
         
-        print "ZZZZ " + str(komenda)
         self.kursorDoBazy.execute(komenda)
         return self.kursorDoBazy.fetchall()
     
@@ -152,7 +142,6 @@ class Kontroler:
                    nazwaTabeli,
                    kluczGlowny):
         komenda = " DELETE FROM " + nazwaTabeli + " WHERE Id =" + str(kluczGlowny)
-        print komenda
         self.kursorDoBazy.execute(komenda)
         
         
@@ -170,7 +159,6 @@ class Kontroler:
                    " ON " + tabelaGlowna + "." + nazwaKluczaGlowna + " = " + tabelaDoDolaczenia + "." + nazwaKluczaDolaczenia + \
                    " WHERE " + tabelaGlowna + ".Id =" + str(kluczGlowny)
                    
-        print komenda
         
         self.kursorDoBazy.execute(komenda)
         

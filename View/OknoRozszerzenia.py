@@ -140,7 +140,6 @@ class OknoRozszerzeniaZagrody(OknoRozszerzenia):
                                                self.kluczGlowny, 
                                                poleDoZapisania)
         self.close()
-#****************************************
 
 class ZwierzetaComboBox(QtGui.QComboBox):
     def __init__(self, parent = None):
@@ -271,7 +270,6 @@ class OknoRozszerzeniaZwierzeta(OknoRozszerzenia):
             
 
         
-# MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMmmm
 
 
 class WeterynarzeComboBox(QtGui.QComboBox):
@@ -363,9 +361,6 @@ class OknoRozszerzeniaWeterynarze(OknoRozszerzenia):
                                                               "Nazwa_Specjalizacji",
                                                               polaDoZapisania[3])
         
-        print "******* " + str(polaDoZapisania)
-        print "******* " + str(self.opisTabeli)
-        print "*******"  + str(self.kluczGlowny)
 
         self.kontroler.modyfikujWartoscWTabeli(self.nazwaTabeli,
                                                self.opisTabeli,
